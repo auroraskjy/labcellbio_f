@@ -4,6 +4,7 @@ import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 import * as React from "react";
 
 // --- Tiptap Core Extensions ---
+import { Quote } from "@/components/tiptap-node/quote-node";
 import { Highlight } from "@tiptap/extension-highlight";
 import { Image } from "@tiptap/extension-image";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
@@ -33,6 +34,7 @@ import "@/components/tiptap-node/image-node/image-node.scss";
 import { ImageUploadNode } from "@/components/tiptap-node/image-upload-node/image-upload-node-extension";
 import "@/components/tiptap-node/list-node/list-node.scss";
 import "@/components/tiptap-node/paragraph-node/paragraph-node.scss";
+import "@/components/tiptap-node/quote-node/quote-node.scss";
 
 // --- Tiptap UI ---
 import { BlockquoteButton } from "@/components/tiptap-ui/blockquote-button";
@@ -60,10 +62,8 @@ import { HighlighterIcon } from "@/components/tiptap-icons/highlighter-icon";
 import { LinkIcon } from "@/components/tiptap-icons/link-icon";
 
 // --- Hooks ---
-import { useCursorVisibility } from "@/hooks/use-cursor-visibility";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrolling } from "@/hooks/use-scrolling";
-import { useWindowSize } from "@/hooks/use-window-size";
 
 // --- Components ---
 // import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
@@ -73,8 +73,7 @@ import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
-
-import content from "@/components/tiptap-templates/simple/data/content.json";
+import { QuoteButton } from "@/components/tiptap-ui/quote-button";
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -104,6 +103,7 @@ const MainToolbarContent = ({
         />
         <BlockquoteButton />
         <CodeBlockButton />
+        <QuoteButton />
       </ToolbarGroup>
 
       <ToolbarSeparator />
@@ -125,13 +125,6 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <MarkButton type="superscript" />
-        <MarkButton type="subscript" />
-      </ToolbarGroup>
-
-      <ToolbarSeparator />
-
-      <ToolbarGroup>
         <TextAlignButton align="left" />
         <TextAlignButton align="center" />
         <TextAlignButton align="right" />
@@ -141,16 +134,12 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
 
       <ToolbarGroup>
-        <ImageUploadButton text="Add" />
+        <ImageUploadButton />
       </ToolbarGroup>
 
       <Spacer />
 
       {isMobile && <ToolbarSeparator />}
-
-      {/* <ToolbarGroup>
-        <ThemeToggle />
-      </ToolbarGroup> */}
     </>
   );
 };
@@ -186,7 +175,6 @@ const MobileToolbarContent = ({
 
 export function SimpleEditor() {
   const isMobile = useIsMobile();
-  const windowSize = useWindowSize();
   const [mobileView, setMobileView] = React.useState<
     "main" | "highlighter" | "link"
   >("main");
@@ -229,18 +217,19 @@ export function SimpleEditor() {
         upload: handleImageUpload,
         onError: (error) => console.error("Upload failed:", error),
       }),
+      Quote,
     ],
-    content,
+    // content,
     onUpdate: ({ editor }) => {
-      console.log(editor.getHTML());
+      // console.log(editor.getHTML());
     },
   });
 
   const isScrolling = useScrolling();
-  const rect = useCursorVisibility({
-    editor,
-    overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
-  });
+  // const rect = useCursorVisibility({
+  //   editor,
+  //   overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
+  // });
 
   React.useEffect(() => {
     if (!isMobile && mobileView !== "main") {
