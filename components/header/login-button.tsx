@@ -1,6 +1,7 @@
 "use client";
 
 import { signin } from "@/actions/auth";
+import { LoginIcon } from "@/components/icons/login-icon";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -40,7 +41,14 @@ export default function LoginButton() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost">Login</Button>
+        <Button
+          variant="ghost"
+          aria-label="로그인"
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+        >
+          <LoginIcon className="size-[16px]" aria-hidden="true" />
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]" showCloseButton={false}>
         {/* Header */}
