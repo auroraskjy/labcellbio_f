@@ -31,6 +31,7 @@
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-hotkeys-hook": "^5.1.0",
+    "tiptap-extension-resize-image": "^1.2.3",
     "tsx": "^4.20.3"
   },
   "devDependencies": {

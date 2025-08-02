@@ -14,6 +14,7 @@ import { TextAlign } from "@tiptap/extension-text-align";
 import { Typography } from "@tiptap/extension-typography";
 import { Selection } from "@tiptap/extensions";
 import { StarterKit } from "@tiptap/starter-kit";
+import ImageResize from "tiptap-extension-resize-image";
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
@@ -218,6 +219,7 @@ export function SimpleEditor() {
         onError: (error) => console.error("Upload failed:", error),
       }),
       Quote,
+      ImageResize,
     ],
     // content,
     onUpdate: ({ editor }) => {
