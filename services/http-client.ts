@@ -1,12 +1,21 @@
-// File: src/api/httpClient.ts
 export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
 
 export interface FetchOptions extends RequestInit {
-  /** Query parameters to append to the URL */
   params?: Record<string, string>;
 }
 
-export const BASE_URL = "http://218.155.112.84:3000";
+// 환경변수에서 BASE_URL 가져오기
+const getBaseURL = (): string => {
+  const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+
+  if (!baseURL) {
+    throw new Error("NEXT_PUBLIC_API_BASE_URL 환경변수가 설정되지 않았습니다.");
+  }
+
+  return baseURL;
+};
+
+export const BASE_URL = getBaseURL();
 
 class HttpClient {
   private baseURL: string;
