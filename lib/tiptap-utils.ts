@@ -1,3 +1,5 @@
+import { UploadFunction } from "@/components/tiptap-node/image-upload-node";
+import { getPresignedUrl, uploadFileToS3 } from "@/services/upload";
 import type { Node as TiptapNode } from "@tiptap/pm/model";
 import { NodeSelection } from "@tiptap/pm/state";
 import type { Editor } from "@tiptap/react";
@@ -249,39 +251,34 @@ export function isNodeTypeSelected(
 }
 
 /**
- * Handles image upload with progress tracking and abort capability
- * @param file The file to upload
- * @param onProgress Optional callback for tracking upload progress
- * @param abortSignal Optional AbortSignal for cancelling the upload
- * @returns Promise resolving to the URL of the uploaded image
+ * Handles the full image upload flow: validation, presigned URL fetch, and file upload.
+ * Matches the UploadFunction signature:
+ * @param file - The file to upload.
+ * @param onProgress - Optional progress callback receiving { progress: number }.
+ * @param abortSignal - Optional AbortSignal for cancellation.
+ * @returns The public URL of the uploaded file.
  */
-export const handleImageUpload = async (
-  file: File,
-  onProgress?: (event: { progress: number }) => void,
-  abortSignal?: AbortSignal
-): Promise<string> => {
-  // Validate file
+export const handleImageUpload: UploadFunction = async (
+  file,
+  onProgress,
+  abortSignal
+) => {
   if (!file) {
     throw new Error("No file provided");
   }
-
+  const maxMB = (MAX_FILE_SIZE / 1024 / 1024).toFixed(2);
   if (file.size > MAX_FILE_SIZE) {
-    throw new Error(
-      `File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`
-    );
+    throw new Error(`File size exceeds maximum allowed (${maxMB} MB)`);
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled");
-    }
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    onProgress?.({ progress });
-  }
+  const { uploadUrl, fileUrl } = await getPresignedUrl(file.name, abortSignal);
+  // Wrap the progress callback to match the event signature
+  const progressHandler = (percent: number) => {
+    onProgress?.({ progress: percent });
+  };
+  await uploadFileToS3(uploadUrl, file, progressHandler, abortSignal);
 
-  return "/images/tiptap-ui-placeholder-image.jpg";
+  return fileUrl;
 };
 
 type ProtocolOptions = {
