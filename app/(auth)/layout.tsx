@@ -1,6 +1,8 @@
-import { isLoggedIn } from "@/lib/auth/session";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
+
+import { redirect } from "next/navigation";
+
+import { isLoggedIn } from "@/lib/auth/session";
 
 interface AuthLayoutProps {
   children: ReactNode;

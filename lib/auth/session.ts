@@ -1,6 +1,8 @@
-import { jwtVerify, SignJWT } from "jose";
-import { cookies } from "next/headers";
 import "server-only";
+
+import { cookies } from "next/headers";
+
+import { jwtVerify, SignJWT } from "jose";
 
 const secretKey = process.env.SESSION_SECRET;
 if (!secretKey) {
