@@ -42,10 +42,12 @@ class HttpClient {
       ...init,
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`HTTP Error: ${response.status}`);
+      throw new Error(JSON.stringify(data));
     }
-    return response.json();
+    return data;
   }
 
   get<T>(endpoint: string, options: FetchOptions = {}): Promise<T> {
