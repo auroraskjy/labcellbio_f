@@ -1,8 +1,9 @@
 "use server";
 
 import { FormState, SigninFormSchema } from "@/lib/auth/auth-valid";
-import { createSession, logout } from "@/lib/auth/session";
+
 import { getLogout, postLogin } from "@/services/auth";
+import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signin(
@@ -27,11 +28,13 @@ export async function signin(
   }
 
   try {
-    const {
-      user: { id },
-    } = await postLogin(parsed.data.username, parsed.data.password);
+    const response = await postLogin(
+      parsed.data.username,
+      parsed.data.password
+    );
 
-    await createSession(id);
+    const { accessToken } = response;
+    (await cookies()).set("accessToken", accessToken);
 
     return {
       message: "로그인 성공!",
@@ -52,8 +55,9 @@ export async function signout() {
     await getLogout();
   } catch (error) {
     console.error("서버 로그아웃 실패:", error);
+  } finally {
+    (await cookies()).delete("accessToken");
   }
 
-  await logout();
   redirect("/");
 }

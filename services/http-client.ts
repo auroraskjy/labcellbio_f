@@ -41,9 +41,11 @@ class HttpClient {
   ): Promise<T> {
     const { params, signal, ...init } = options;
     const url = this.buildUrl(endpoint, params);
+
     const response = await fetch(url, {
       method,
       signal,
+      credentials: "include",
       headers: {
         "Content-Type": "application/json",
         ...init.headers,

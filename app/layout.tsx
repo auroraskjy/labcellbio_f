@@ -23,7 +23,10 @@ export default async function RootLayout({
       className={`${pretendard.variable}`}
       suppressHydrationWarning
     >
-      <body className={cn(pretendard.className, "antialiased")}>
+      <body
+        className={cn(pretendard.className, "antialiased")}
+        suppressHydrationWarning
+      >
         <Header />
         <main className="w-full">{children}</main>
         <Toaster expand />

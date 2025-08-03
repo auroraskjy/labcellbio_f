@@ -1,11 +1,11 @@
 import LoginButton from "@/components/header/login-button";
-import ProfileButton from "@/components/header/profile-button";
-import { isLoggedIn } from "@/lib/auth/session";
 import { cn } from "@/lib/tiptap-utils";
+import { getAuthStatus } from "@/services/auth";
 import Link from "next/link";
+import ProfileButton from "./profile-button";
 
 export default async function Header() {
-  const loggedIn = await isLoggedIn();
+  const { loggedIn } = await getAuthStatus();
 
   return (
     <header
