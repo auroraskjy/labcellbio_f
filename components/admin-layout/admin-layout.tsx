@@ -7,14 +7,12 @@ import AdminSidebar from "@/components/admin-layout/admin-sidebar";
 
 export default function AdminLayout({ children }: PropsWithChildren) {
   return (
-    <div className="flex relative w-full min-h-[100vh]">
-      {/* sidebar */}
+    <div className="flex relative w-full min-h-screen">
       <AdminSidebar />
 
-      {/* content */}
-      <div className="flex w-full flex-col">
+      <div className="flex-1 flex flex-col">
         <AdminHeader />
-        {children}
+        <main className="flex-1 min-h-screen">{children}</main>
       </div>
     </div>
   );

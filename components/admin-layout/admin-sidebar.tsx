@@ -2,8 +2,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function AdminSidebar() {
   return (
-    <div className="w-64 border-r border-border/30">
-      <div className="p-6 border-b border-border/30 w-full ">
+    <div className="w-64 border-r border-border/30 hidden md:block sticky top-0 left-0 h-screen">
+      <div className="p-6 border-b border-border/30 w-full h-21.5">
         <div className="flex items-center gap-3">
           <Avatar>
             <AvatarImage src="https://github.com/shadcn.png" />

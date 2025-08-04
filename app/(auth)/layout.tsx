@@ -17,7 +17,7 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
 
   return (
     <AdminLayout>
-      <main className="w-full">{children}</main>
+      <main className="w-full bg-[#fafbfc] h-full">{children}</main>
     </AdminLayout>
   );
 }

@@ -1,3 +1,12 @@
+import { Button } from "@/components/ui/button";
+import { BurgerMenuIcon } from "../icons/burger-menu-icon";
+
 export default function AdminHeader() {
-  return <header>header</header>;
+  return (
+    <header className="p-6 border-b border-border/30 h-21.5 sticky top-0 w-full bg-background">
+      <Button variant="ghost">
+        <BurgerMenuIcon className="w-4 h-4 md:hidden" />
+      </Button>
+    </header>
+  );
 }
