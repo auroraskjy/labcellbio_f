@@ -1,4 +1,3 @@
-import Header from "@/components/header";
 import "./globals.css";
 
 import { Toaster } from "@/components/ui/sonner";
@@ -27,8 +26,7 @@ export default async function RootLayout({
         className={cn(pretendard.className, "antialiased")}
         suppressHydrationWarning
       >
-        <Header />
-        <main className="w-full">{children}</main>
+        {children}
         <Toaster expand />
       </body>
     </html>

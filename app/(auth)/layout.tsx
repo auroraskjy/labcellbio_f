@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 
+import AdminLayout from "@/components/admin-layout/admin-layout";
 import { getAuthStatus } from "@/services/auth";
 import { redirect } from "next/navigation";
 
@@ -14,5 +15,9 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
     redirect("/");
   }
 
-  return <>{children}</>;
+  return (
+    <AdminLayout>
+      <main className="w-full">{children}</main>
+    </AdminLayout>
+  );
 }
