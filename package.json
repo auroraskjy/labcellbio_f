@@ -58,5 +58,10 @@
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.6",
     "typescript": "^5"
+  },
+  "overrides": {
+    "@tailwindcss/postcss": {
+      "lightningcss": "1.24.0"
+    }
   }
 }
