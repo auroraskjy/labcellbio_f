@@ -1,12 +1,14 @@
 "use client";
 
+import { PropsWithChildren } from "react";
+
 import { signout } from "@/actions/auth";
+import { useActivePath } from "@/components/admin-layout/hooks/use-active-path";
 import { cn } from "@/lib/utils";
+
+import { Button } from "@/components/ui/button";
 import { LucideIcon } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { PropsWithChildren, useActionState, useMemo } from "react";
-import { Button } from "../ui/button";
 
 interface SidebarItemProps {
   icon: LucideIcon;
@@ -23,22 +25,11 @@ export default function SidebarItem({
   href,
   isLogout = false,
 }: SidebarItemProps) {
-  const pathname = usePathname();
-  const [_, action] = useActionState(signout, undefined);
-
-  const isActive = useMemo(() => {
-    if (!href) return false;
-
-    return (
-      pathname === href ||
-      (pathname.startsWith(`${href}/`) &&
-        /^\d+$/.test(pathname.slice(href.length + 1)))
-    );
-  }, [href, pathname]);
+  const { isActive } = useActivePath({ href });
 
   return (
     <LinkWrapper href={href}>
-      <form action={isLogout ? action : undefined}>
+      <form action={isLogout ? signout : undefined}>
         <Button
           variant="ghost"
           className={cn(

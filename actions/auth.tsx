@@ -103,7 +103,7 @@ export async function signout() {
   const cookieStore = await cookies();
 
   try {
-    return httpClient.get<{ message: string }>("/auth/logout");
+    await httpClient.get<{ message: string }>("/auth/logout");
   } catch (error) {
     console.error("서버 로그아웃 실패:", error);
   } finally {

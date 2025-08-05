@@ -1,8 +1,12 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { cn } from "@/lib/utils";
-import { FileTextIcon, ImageIcon, LogOutIcon } from "lucide-react";
 import { PropsWithChildren } from "react";
-import SidebarItem from "./sidebar-item";
+
+import { SIDEBAR_MENU_ITEMS } from "./constant";
+
+import { cn } from "@/lib/utils";
+
+import SidebarItem from "@/components/admin-layout/sidebar-item";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { LogOutIcon } from "lucide-react";
 
 export default function AdminSidebar() {
   return (
@@ -24,18 +28,15 @@ export default function AdminSidebar() {
 
       <div className="w-full relative h-[calc(100vh-5.375rem)]">
         <SidebarGroup>
-          <SidebarItem
-            icon={FileTextIcon}
-            title="게시글"
-            subtitle="게시글 관리"
-            href="/admin"
-          />
-          <SidebarItem
-            icon={ImageIcon}
-            title="배너 이미지"
-            subtitle="배너 이미지 관리"
-            href="/admin/banner"
-          />
+          {SIDEBAR_MENU_ITEMS.map((item) => (
+            <SidebarItem
+              key={item.href}
+              icon={item.icon}
+              title={item.title}
+              subtitle={item.subtitle}
+              href={item.href}
+            />
+          ))}
         </SidebarGroup>
 
         {/* logout */}
