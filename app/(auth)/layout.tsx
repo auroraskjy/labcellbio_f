@@ -16,9 +16,5 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
     redirect("/");
   }
 
-  return (
-    <AdminLayout>
-      <main className="w-full bg-[#fafbfc] h-full">{children}</main>
-    </AdminLayout>
-  );
+  return <AdminLayout>{children}</AdminLayout>;
 }
