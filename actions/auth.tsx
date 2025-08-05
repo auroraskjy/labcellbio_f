@@ -2,9 +2,19 @@
 
 import { FormState, SigninFormSchema } from "@/lib/auth/auth-valid";
 
-import { getLogout, postLogin } from "@/services/auth";
+import { httpClient } from "@/services/http-client";
+import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+interface LoginResponse {
+  message: string;
+  accessToken: string;
+  user: {
+    id: number;
+    username: string;
+  };
+}
 
 export async function signin(
   _: FormState,
@@ -28,13 +38,16 @@ export async function signin(
   }
 
   try {
-    const response = await postLogin(
-      parsed.data.username,
-      parsed.data.password
-    );
+    const cookieStore = await cookies();
+
+    const response = await httpClient.post<LoginResponse>("/auth/login", {
+      username: parsed.data.username,
+      password: parsed.data.password,
+    });
 
     const { accessToken } = response;
-    (await cookies()).set("accessToken", accessToken);
+    cookieStore.set("accessToken", accessToken);
+    revalidateTag("auth-status");
 
     return {
       message: "로그인 성공!",
@@ -50,13 +63,51 @@ export async function signin(
   }
 }
 
-export async function signout() {
+interface AuthStatusResponse {
+  loggedIn: boolean;
+  user: {
+    id: number;
+    username: string;
+    createdAt: string;
+  } | null;
+}
+
+export async function getAuthStatus() {
+  const cookieStore = await cookies();
+  const accessToken = cookieStore.get("accessToken")?.value;
+
   try {
-    await getLogout();
+    return httpClient.get<AuthStatusResponse>("/auth/status", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+      next: {
+        tags: ["auth-status"],
+        revalidate: 0,
+      },
+      cache: "no-store",
+    });
+  } catch (error) {
+    if (accessToken) {
+      cookieStore.delete("accessToken");
+    }
+
+    return {
+      loggedIn: false,
+      user: null,
+    } as AuthStatusResponse;
+  }
+}
+
+export async function signout() {
+  const cookieStore = await cookies();
+
+  try {
+    return httpClient.get<{ message: string }>("/auth/logout");
   } catch (error) {
     console.error("서버 로그아웃 실패:", error);
   } finally {
-    (await cookies()).delete("accessToken");
+    cookieStore.delete("accessToken");
   }
 
   redirect("/");

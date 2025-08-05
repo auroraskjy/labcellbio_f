@@ -1,6 +1,7 @@
 import LoginButton from "@/components/header/login-button";
 import { cn } from "@/lib/tiptap-utils";
-import { getAuthStatus } from "@/services/auth";
+
+import { getAuthStatus } from "@/actions/auth";
 import Link from "next/link";
 import ProfileButton from "./profile-button";
 

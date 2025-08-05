@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
 
 import AdminLayout from "@/components/admin-layout/admin-layout";
-import { getAuthStatus } from "@/services/auth";
+
+import { getAuthStatus } from "@/actions/auth";
 import { redirect } from "next/navigation";
 
 interface AuthLayoutProps {
