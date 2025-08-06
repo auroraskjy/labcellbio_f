@@ -49,7 +49,7 @@ export default function ProfileButton() {
         <DropdownMenuGroup>
           <DropdownMenuItem asChild className="cursor-pointer">
             <Link
-              href="/admin"
+              href="/admin/board"
               className="w-full"
               aria-label="관리자 페이지로 이동"
             >

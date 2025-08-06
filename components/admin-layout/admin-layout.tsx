@@ -12,8 +12,10 @@ export default function AdminLayout({ children }: PropsWithChildren) {
 
       <div className="flex-1 flex flex-col">
         <AdminHeader />
-        <main className="flex-1 min-h-screen bg-[#fafbfc] h-full">
-          {children}
+        <main className="flex-1 bg-[#fafbfc] h-full p-[14px] md:p-[21px]">
+          <div className="w-full h-full max-w-[var(--admin-container-width)] mx-auto">
+            {children}
+          </div>
         </main>
       </div>
     </div>

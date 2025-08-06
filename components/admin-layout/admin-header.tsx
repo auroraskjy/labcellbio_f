@@ -28,7 +28,7 @@ export default function AdminHeader() {
   });
 
   return (
-    <header className="p-6 border-b border-border/30 h-15 md:h-21.5 sticky top-0 w-full bg-background flex items-center justify-between">
+    <header className="p-6 border-b border-border/30 h-15 md:h-21.5 sticky top-0 w-full bg-background flex items-center justify-between z-10">
       <div className="hidden md:flex flex-col">
         <p className="text-lg font-[600]">LABCELLBIO</p>
         <p className="text-xs text-muted-foreground">{formattedDate}</p>

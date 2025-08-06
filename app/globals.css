@@ -91,6 +91,7 @@ body {
   --brand: #3b82f6;
 
   --container-width: 1200px;
+  --admin-container-width: 1120px;
 }
 
 .dark {

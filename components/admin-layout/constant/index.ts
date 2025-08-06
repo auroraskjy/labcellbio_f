@@ -5,7 +5,7 @@ export const SIDEBAR_MENU_ITEMS = [
     icon: FileTextIcon,
     title: "게시글",
     subtitle: "게시글 관리",
-    href: "/admin",
+    href: "/admin/board",
   },
   {
     icon: ImageIcon,

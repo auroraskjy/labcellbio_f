@@ -19,7 +19,7 @@ export default function AdminSidebar() {
           </Avatar>
 
           <div className="flex flex-col">
-            <h1 className="text-[14px] font-bold">LABCELLBIO</h1>
+            <p className="text-[14px] font-bold">LABCELLBIO</p>
             <p className="text-[10.5px] text-muted-foreground">관리시스템</p>
           </div>
         </div>
