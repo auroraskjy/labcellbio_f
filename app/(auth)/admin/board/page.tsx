@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
-import { getBoardList } from "@/services/board";
 import { FileTextIcon, PlusIcon } from "lucide-react";
 import Link from "next/link";
 
 export default async function AdminPage() {
-  const boardList = await getBoardList();
-
   return (
     <div>
       {/* top */}

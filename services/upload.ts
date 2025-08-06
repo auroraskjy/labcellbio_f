@@ -3,6 +3,7 @@ import { httpClient } from "./http-client";
 export interface PresignedUrlResponse {
   uploadUrl: string;
   fileUrl: string;
+  s3Key: string;
 }
 
 /**
@@ -68,4 +69,30 @@ export const uploadFileToS3 = (
     xhr.setRequestHeader("Content-Type", file.type);
     xhr.send(file);
   });
+};
+
+interface PostCompleteUrlRequest {
+  filename: string;
+  originalName: string;
+  fileUrl: string;
+  s3Key: string;
+  contentType: string;
+  fileSize: number;
+}
+
+interface PostCompleteUrlResponse {
+  success: boolean;
+  uploadId: number;
+  upload: {
+    description: string;
+  };
+  permanentUrl: string;
+  message: string;
+}
+
+export const postCompleteUrl = (request: PostCompleteUrlRequest) => {
+  return httpClient.post<PostCompleteUrlResponse>(
+    "/uploads/complete-upload",
+    request
+  );
 };

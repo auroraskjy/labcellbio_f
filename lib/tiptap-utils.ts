@@ -1,8 +1,13 @@
 import { UploadFunction } from "@/components/tiptap-node/image-upload-node";
-import { getPresignedUrl, uploadFileToS3 } from "@/services/upload";
+import {
+  getPresignedUrl,
+  postCompleteUrl,
+  uploadFileToS3,
+} from "@/services/upload";
 import type { Node as TiptapNode } from "@tiptap/pm/model";
 import { NodeSelection } from "@tiptap/pm/state";
 import type { Editor } from "@tiptap/react";
+import { getFilenameWithTimestamp } from "./utils";
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -266,17 +271,43 @@ export const handleImageUpload: UploadFunction = async (
   if (!file) {
     throw new Error("No file provided");
   }
+
+  const today = new Date();
+  const formattedDate = today.toLocaleDateString("ko-KR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
+
   const maxMB = (MAX_FILE_SIZE / 1024 / 1024).toFixed(2);
   if (file.size > MAX_FILE_SIZE) {
     throw new Error(`File size exceeds maximum allowed (${maxMB} MB)`);
   }
 
-  const { uploadUrl, fileUrl } = await getPresignedUrl(file.name, abortSignal);
-  // Wrap the progress callback to match the event signature
+  const { uploadUrl, fileUrl, s3Key } = await getPresignedUrl(
+    file.name,
+    abortSignal
+  );
+
   const progressHandler = (percent: number) => {
     onProgress?.({ progress: percent });
   };
+
   await uploadFileToS3(uploadUrl, file, progressHandler, abortSignal);
+
+  const extension = "." + file.name.split(".").at(-1);
+
+  const filename = file.name.split(extension)[0];
+
+  const { uploadId } = await postCompleteUrl({
+    filename: getFilenameWithTimestamp(`${filename}${extension}`),
+    originalName: file.name,
+    contentType: file.type,
+    fileSize: file.size,
+    fileUrl,
+    s3Key,
+  });
 
   return fileUrl;
 };

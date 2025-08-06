@@ -6,20 +6,56 @@ import FieldSet from "@/components/board/field-set";
 import InputGroup from "@/components/board/input-group";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
-import { SquarePenIcon } from "lucide-react";
+import { getFilenameWithTimestamp } from "@/lib/utils";
+import {
+  getPresignedUrl,
+  postCompleteUrl,
+  uploadFileToS3,
+} from "@/services/upload";
+import { SquarePenIcon, UserIcon } from "lucide-react";
+import { useFormContext } from "react-hook-form";
+import { BoardFormValues } from "./hooks/use-board-form";
+
+export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
 export default function AuthorField() {
+  const { register, setValue, watch } = useFormContext<BoardFormValues>();
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleAvatarClick = () => {
     fileInputRef.current?.click();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    // TODO: 업로드 로직 or preview용 URL 생성
-    console.log("선택된 파일:", file);
+    const maxMB = (MAX_FILE_SIZE / 1024 / 1024).toFixed(2);
+    if (file.size > MAX_FILE_SIZE) {
+      throw new Error(`File size exceeds maximum allowed (${maxMB} MB)`);
+    }
+
+    const { uploadUrl, fileUrl, s3Key } = await getPresignedUrl(file.name);
+
+    await uploadFileToS3(uploadUrl, file);
+
+    const extension = "." + file.name.split(".").at(-1);
+
+    const filename = file.name.split(extension)[0];
+
+    await postCompleteUrl({
+      filename: getFilenameWithTimestamp(`${filename}${extension}`),
+      originalName: file.name,
+      contentType: file.type,
+      fileSize: file.size,
+      fileUrl,
+      s3Key,
+    });
+
+    setValue("authorImage", fileUrl, {
+      shouldValidate: true,
+      shouldDirty: true,
+    });
   };
 
   return (
@@ -38,8 +74,10 @@ export default function AuthorField() {
           className="w-15 h-15 relative cursor-pointer group"
           onClick={handleAvatarClick}
         >
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={watch("authorImage") || undefined} />
+          <AvatarFallback>
+            <UserIcon />
+          </AvatarFallback>
 
           <div className="absolute inset-0 bg-black/50 hidden group-hover:flex justify-center items-center">
             <SquarePenIcon className="text-white" />
@@ -47,7 +85,7 @@ export default function AuthorField() {
         </Avatar>
 
         <FieldSet label="작성자명" isRequired>
-          <Input placeholder="작성자명을 입력하세요" />
+          <Input placeholder="작성자명을 입력하세요" {...register("author")} />
         </FieldSet>
       </div>
     </InputGroup>

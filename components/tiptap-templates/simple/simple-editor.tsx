@@ -1,5 +1,7 @@
 "use client";
 
+import { Node } from "@tiptap/pm/model";
+
 import { EditorContent, EditorContext, useEditor } from "@tiptap/react";
 import * as React from "react";
 
@@ -70,11 +72,17 @@ import { useScrolling } from "@/hooks/use-scrolling";
 // import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
 
 // --- Lib ---
-import { handleImageUpload, MAX_FILE_SIZE } from "@/lib/tiptap-utils";
+import { MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 import { QuoteButton } from "@/components/tiptap-ui/quote-button";
+import { getFilenameWithTimestamp } from "@/lib/utils";
+import {
+  getPresignedUrl,
+  postCompleteUrl,
+  uploadFileToS3,
+} from "@/services/upload";
 
 const MainToolbarContent = ({
   onHighlighterClick,
@@ -174,7 +182,17 @@ const MobileToolbarContent = ({
   </>
 );
 
-export function SimpleEditor() {
+interface SimpleEditorProps {
+  onUpdate?: (html: string) => void;
+  onImageAdd?: (fileUrl: string, uploadId: number) => void;
+  handleEditorImageRemove?: (fileUrlList: string[]) => void;
+}
+
+export function SimpleEditor({
+  onUpdate,
+  onImageAdd,
+  handleEditorImageRemove,
+}: SimpleEditorProps) {
   const isMobile = useIsMobile();
   const [mobileView, setMobileView] = React.useState<
     "main" | "highlighter" | "link"
@@ -215,15 +233,89 @@ export function SimpleEditor() {
         accept: "image/*",
         maxSize: MAX_FILE_SIZE,
         limit: 3,
-        upload: handleImageUpload,
+        upload: async (file, onProgress, abortSignal) => {
+          if (!file) {
+            throw new Error("No file provided");
+          }
+
+          const today = new Date();
+          const formattedDate = today.toLocaleDateString("ko-KR", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            weekday: "long",
+          });
+
+          const maxMB = (MAX_FILE_SIZE / 1024 / 1024).toFixed(2);
+          if (file.size > MAX_FILE_SIZE) {
+            throw new Error(`File size exceeds maximum allowed (${maxMB} MB)`);
+          }
+
+          const { uploadUrl, fileUrl, s3Key } = await getPresignedUrl(
+            file.name,
+            abortSignal
+          );
+
+          const progressHandler = (percent: number) => {
+            onProgress?.({ progress: percent });
+          };
+
+          await uploadFileToS3(uploadUrl, file, progressHandler, abortSignal);
+
+          const extension = "." + file.name.split(".").at(-1);
+
+          const filename = file.name.split(extension)[0];
+
+          const { uploadId } = await postCompleteUrl({
+            filename: getFilenameWithTimestamp(`${filename}${extension}`),
+            originalName: file.name,
+            contentType: file.type,
+            fileSize: file.size,
+            fileUrl,
+            s3Key,
+          });
+
+          onImageAdd?.(fileUrl, uploadId);
+
+          return fileUrl;
+        },
         onError: (error) => console.error("Upload failed:", error),
       }),
       Quote,
-      ImageResize,
+      ImageResize.configure({
+        inline: true,
+      }),
     ],
     // content,
     onUpdate: ({ editor }) => {
-      // console.log(editor.getHTML());
+      onUpdate?.(editor.getHTML());
+    },
+    onTransaction: ({ editor, transaction }) => {
+      if (!transaction.docChanged) return;
+
+      const oldImages = new Set<string>();
+      const newImages = new Set<string>();
+
+      // 변경 전 이미지들
+      transaction.before.descendants((node: Node) => {
+        if (node.type.name === "image") {
+          oldImages.add(node.attrs.src);
+        }
+      });
+
+      // 변경 후 이미지들
+      transaction.doc.descendants((node: Node) => {
+        if (node.type.name === "image") {
+          newImages.add(node.attrs.src);
+        }
+      });
+
+      // 삭제된 이미지들
+      const removedImages = [...oldImages].filter((src) => !newImages.has(src));
+
+      if (removedImages.length > 0 && handleEditorImageRemove) {
+        handleEditorImageRemove(removedImages);
+      }
     },
   });
 
