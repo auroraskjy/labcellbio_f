@@ -1,10 +1,10 @@
 import { QuoteAltLeftIcon } from "@/components/tiptap-icons/quote-alt-left-icon";
 import { QuoteAltRightIcon } from "@/components/tiptap-icons/quote-alt-right-icon";
 import { TrashIcon } from "@/components/tiptap-icons/trash-icon";
-import { NodeViewWrapper } from "@tiptap/react";
+import { NodeViewProps, NodeViewWrapper } from "@tiptap/react";
 import React, { useEffect, useRef, useState } from "react";
 
-interface QuoteNodeViewProps {
+interface QuoteNodeViewProps extends NodeViewProps {
   node: any;
   updateAttributes: (attrs: Record<string, any>) => void;
   deleteNode: () => void;
@@ -14,6 +14,7 @@ export const QuoteNodeView: React.FC<QuoteNodeViewProps> = ({
   node,
   updateAttributes,
   deleteNode,
+  editor,
 }) => {
   const [isNodeSelected, setIsNodeSelected] = useState(false);
   const [showDeleteButton, setShowDeleteButton] = useState(false);
@@ -110,7 +111,7 @@ export const QuoteNodeView: React.FC<QuoteNodeViewProps> = ({
       <div
         ref={containerRef}
         className={`quote-container ${isNodeSelected ? "selected" : ""}`}
-        onMouseEnter={() => setShowDeleteButton(true)}
+        onMouseEnter={() => editor?.isEditable && setShowDeleteButton(true)}
         onMouseLeave={() => !isNodeSelected && setShowDeleteButton(false)}
         onClick={handleBorderClick}
         onKeyDown={handleKeyDown}
@@ -130,6 +131,8 @@ export const QuoteNodeView: React.FC<QuoteNodeViewProps> = ({
             onBlur={handleInputBlur}
             onClick={handleInputClick}
             placeholder="내용을 입력하세요."
+            disabled={!editor?.isEditable}
+            readOnly={!editor?.isEditable}
           />
 
           <input
@@ -141,12 +144,14 @@ export const QuoteNodeView: React.FC<QuoteNodeViewProps> = ({
             onBlur={handleInputBlur}
             onClick={handleInputClick}
             placeholder="출처 입력"
+            disabled={!editor?.isEditable}
+            readOnly={!editor?.isEditable}
           />
         </div>
 
         <QuoteAltRightIcon className="text-gray-300" />
 
-        {showDeleteButton && (
+        {showDeleteButton && editor?.isEditable && (
           <div className="quote-delete-tooltip">
             <button
               className="quote-delete-button"

@@ -20,7 +20,7 @@ export interface CreateBoardRequest {
   description: string;
   content: string;
   thumbnail: string;
-  boardImages: number[];
+  boardImages: number[] | null;
 }
 
 export interface CreateBoardResponse {
@@ -33,8 +33,7 @@ export interface CreateBoardResponse {
   thumbnail: string;
   boardImages: {
     id: number;
-    boardId: number;
-    uploadId: number;
+    fileUrl: string;
   }[];
   createdAt: string;
   updatedAt: string;

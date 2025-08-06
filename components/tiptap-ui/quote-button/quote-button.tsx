@@ -1,36 +1,22 @@
 import { QuoteIcon } from "@/components/tiptap-icons/quote-icon";
 import { Button } from "@/components/tiptap-ui-primitive/button";
-import { useTiptapEditor } from "@/hooks/use-tiptap-editor";
+import { Editor } from "@tiptap/core";
 import React from "react";
+import { useQuote } from "./use-quote";
 
 interface QuoteButtonProps {
-  editor?: any;
+  editor?: Editor;
+  onToggled?: () => void;
 }
 
 export const QuoteButton = React.forwardRef<
   HTMLButtonElement,
   QuoteButtonProps
->(({ editor: propEditor }, ref) => {
-  const { editor } = useTiptapEditor(propEditor);
-
-  const handleClick = () => {
-    if (!editor) return;
-    editor.chain().focus().setQuote().run();
-  };
-
-  // quote node 내부에 있는지 확인
-  const isActive = React.useMemo(() => {
-    if (!editor) return false;
-
-    const { state } = editor;
-    const { selection } = state;
-    const { $from } = selection;
-
-    // 현재 위치의 노드가 quote 노드인지 확인
-    return $from.parent.type.name === "quote";
-  }, [editor]);
-
-  const canToggle = editor?.can().setQuote?.() || false;
+>(({ editor: propEditor, onToggled }, ref) => {
+  const { isActive, handleQuote, canToggle, label, shortcutKeys } = useQuote({
+    editor: propEditor,
+    onToggled,
+  });
 
   return (
     <Button
@@ -40,14 +26,14 @@ export const QuoteButton = React.forwardRef<
       data-active-state={isActive ? "on" : "off"}
       data-disabled={!canToggle}
       role="button"
-      tabIndex={-1}
-      aria-label="Quote"
+      tabIndex={0}
+      aria-label={label}
       aria-pressed={isActive}
-      tooltip="Quote"
-      onClick={handleClick}
+      tooltip={`${label} (${shortcutKeys})`}
+      onClick={handleQuote}
       ref={ref}
     >
-      <QuoteIcon className="tiptap-button-icon" />
+      <QuoteIcon className="tiptap-button-icon" aria-hidden="true" />
     </Button>
   );
 });

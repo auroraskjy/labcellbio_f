@@ -16,7 +16,6 @@ import { TextAlign } from "@tiptap/extension-text-align";
 import { Typography } from "@tiptap/extension-typography";
 import { Selection } from "@tiptap/extensions";
 import { StarterKit } from "@tiptap/starter-kit";
-import ImageResize from "tiptap-extension-resize-image";
 
 // --- UI Primitives ---
 import { Button } from "@/components/tiptap-ui-primitive/button";
@@ -69,7 +68,6 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { useScrolling } from "@/hooks/use-scrolling";
 
 // --- Components ---
-// import { ThemeToggle } from "@/components/tiptap-templates/simple/theme-toggle";
 
 // --- Lib ---
 import { MAX_FILE_SIZE } from "@/lib/tiptap-utils";
@@ -202,13 +200,14 @@ export function SimpleEditor({
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: false,
+    editable: true,
     editorProps: {
       attributes: {
         autocomplete: "off",
         autocorrect: "off",
         autocapitalize: "off",
         "aria-label": "Main content area, start typing to enter text.",
-        class: "simple-editor",
+        class: "simple-editor editable", // editable 클래스 추가
       },
     },
     extensions: [
@@ -219,12 +218,12 @@ export function SimpleEditor({
           enableClickSelection: true,
         },
       }),
+      Image,
       HorizontalRule,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
       Typography,
       Superscript,
       Subscript,
@@ -282,9 +281,6 @@ export function SimpleEditor({
         onError: (error) => console.error("Upload failed:", error),
       }),
       Quote,
-      ImageResize.configure({
-        inline: true,
-      }),
     ],
     // content,
     onUpdate: ({ editor }) => {
@@ -320,10 +316,6 @@ export function SimpleEditor({
   });
 
   const isScrolling = useScrolling();
-  // const rect = useCursorVisibility({
-  //   editor,
-  //   overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
-  // });
 
   React.useEffect(() => {
     if (!isMobile && mobileView !== "main") {

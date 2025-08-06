@@ -11,10 +11,13 @@ import { CodeIcon, UploadIcon } from "lucide-react";
 import { FormProvider } from "react-hook-form";
 
 import { createBoard } from "@/services/board/board";
+import { useRouter } from "next/navigation";
 import { BoardFormValues, useBoardForm } from "./hooks/use-board-form";
 
 export default function BoardForm() {
   const methods = useBoardForm();
+
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -25,12 +28,20 @@ export default function BoardForm() {
   } = methods;
 
   const onSubmit = async (data: BoardFormValues) => {
-    const { boardImages, ...rest } = data;
+    const { boardImages: bi, ...rest } = data;
+
+    const boardImages = !!bi
+      ? bi.length > 0
+        ? bi.map((image) => image.uploadId)
+        : null
+      : null;
 
     await createBoard({
       ...rest,
-      boardImages: boardImages.map((image) => image.uploadId),
+      boardImages,
     });
+
+    router.replace("/admin/board");
   };
 
   // SimpleEditor 컴포넌트에 onUpdate prop 추가

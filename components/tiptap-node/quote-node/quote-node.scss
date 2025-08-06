@@ -32,15 +32,29 @@
       justify-content: center;
       text-align: center;
       transition: border-color 0.2s ease;
-      cursor: pointer;
       outline: none;
 
-      // 호버 시 테두리 표시
+      // editable이 false일 때는 커서와 호버 효과 제거
+      .ProseMirror:not(.editable) & {
+        cursor: default;
+
+        &:hover {
+          border-color: transparent;
+        }
+
+        &.selected {
+          border-color: transparent;
+          box-shadow: none;
+        }
+      }
+
+      // editable이 true일 때 (기본 상태)
+      cursor: pointer;
+
       &:hover {
         border-color: var(--quote-border-color);
       }
 
-      // 노드 선택 상태
       &.selected {
         border-color: var(--tt-brand-color-500);
         border-width: 2px;
