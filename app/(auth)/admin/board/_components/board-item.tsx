@@ -31,7 +31,7 @@ export default function BoardItem({ board }: BoardItemProps) {
   };
 
   return (
-    <TableRow className="cursor-pointer">
+    <TableRow>
       <TableCell>
         <div className="w-20 h-15 rounded-lg overflow-hidden relative">
           <Image

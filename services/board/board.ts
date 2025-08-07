@@ -31,3 +31,14 @@ export const getSingleBoard = async (id: number): Promise<GetBoardDTO> => {
 export const deleteBoard = async (id: number): Promise<{ message: string }> => {
   return httpClient.delete<{ message: string }>(`/board/${id}`);
 };
+
+export const getBoardDetail = async (id: number): Promise<GetBoardDTO> => {
+  return httpClient.get<GetBoardDTO>(`/board/${id}`);
+};
+
+export const updateBoard = async (
+  id: number,
+  request: CreateBoardRequest
+): Promise<CreateBoardResponse> => {
+  return httpClient.patch<CreateBoardResponse>(`/board/${id}`, request);
+};

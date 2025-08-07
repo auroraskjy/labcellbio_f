@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-import { CreateBoardRequest } from "@/services/board/types";
+import { CreateBoardRequest, GetBoardDTO } from "@/services/board/types";
 // import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -26,10 +26,22 @@ interface BoardFormType extends Omit<CreateBoardRequest, "boardImages"> {
   }[];
 }
 
-export function useBoardForm() {
+export function useBoardForm(board?: GetBoardDTO) {
   const methods = useForm<BoardFormType>({
     // resolver: zodResolver(schema),
     mode: "onChange",
+    defaultValues: {
+      author: board?.author,
+      authorImage: board?.authorImage,
+      title: board?.title,
+      description: board?.description,
+      thumbnail: board?.thumbnail,
+      content: board?.content,
+      boardImages: board?.boardImages.map((image) => ({
+        fileUrl: image.fileUrl,
+        uploadId: image.id,
+      })),
+    },
   });
 
   return methods;

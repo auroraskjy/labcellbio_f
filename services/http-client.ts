@@ -1,4 +1,4 @@
-export type RequestMethod = "GET" | "POST" | "PUT" | "DELETE";
+export type RequestMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export interface FetchOptions extends RequestInit {
   params?: Record<string, string>;
@@ -116,6 +116,17 @@ class HttpClient {
     options: FetchOptions = {}
   ): Promise<T> {
     return this.fetchJSON<T>(endpoint, "PUT", {
+      body: JSON.stringify(data),
+      ...options,
+    });
+  }
+
+  patch<T>(
+    endpoint: string,
+    data: unknown,
+    options: FetchOptions = {}
+  ): Promise<T> {
+    return this.fetchJSON<T>(endpoint, "PATCH", {
       body: JSON.stringify(data),
       ...options,
     });

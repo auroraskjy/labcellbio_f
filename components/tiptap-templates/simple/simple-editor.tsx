@@ -184,12 +184,14 @@ interface SimpleEditorProps {
   onUpdate?: (html: string) => void;
   onImageAdd?: (fileUrl: string, uploadId: number) => void;
   handleEditorImageRemove?: (fileUrlList: string[]) => void;
+  content?: string;
 }
 
 export function SimpleEditor({
   onUpdate,
   onImageAdd,
   handleEditorImageRemove,
+  content,
 }: SimpleEditorProps) {
   const isMobile = useIsMobile();
   const [mobileView, setMobileView] = React.useState<
@@ -282,7 +284,7 @@ export function SimpleEditor({
       }),
       Quote,
     ],
-    // content,
+    content,
     onUpdate: ({ editor }) => {
       onUpdate?.(editor.getHTML());
     },
