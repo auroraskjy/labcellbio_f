@@ -1,8 +1,9 @@
 "use client";
 
+import { ImageNode } from "@/components/tiptap-node/image-node/image-node-extension"; // 기본 Image 대신 커스텀 ImageNode 사용
 import { Quote } from "@/components/tiptap-node/quote-node";
 import { Highlight } from "@tiptap/extension-highlight";
-import { Image } from "@tiptap/extension-image";
+// import { Image } from "@tiptap/extension-image"; // 이 줄 제거
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
@@ -33,7 +34,7 @@ const CustomHtml = ({ html }: { html: string }) => {
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
+      ImageNode, // 커스텀 ImageNode 사용
       Typography,
       Superscript,
       Subscript,

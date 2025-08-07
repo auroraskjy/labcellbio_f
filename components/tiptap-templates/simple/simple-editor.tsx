@@ -8,7 +8,6 @@ import * as React from "react";
 // --- Tiptap Core Extensions ---
 import { Quote } from "@/components/tiptap-node/quote-node";
 import { Highlight } from "@tiptap/extension-highlight";
-import { Image } from "@tiptap/extension-image";
 import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { Subscript } from "@tiptap/extension-subscript";
 import { Superscript } from "@tiptap/extension-superscript";
@@ -73,6 +72,7 @@ import { useScrolling } from "@/hooks/use-scrolling";
 import { MAX_FILE_SIZE } from "@/lib/tiptap-utils";
 
 // --- Styles ---
+import { ImageNode } from "@/components/tiptap-node/image-node/image-node-extension";
 import "@/components/tiptap-templates/simple/simple-editor.scss";
 import { QuoteButton } from "@/components/tiptap-ui/quote-button";
 import { getFilenameWithTimestamp } from "@/lib/utils";
@@ -218,7 +218,7 @@ export function SimpleEditor({
           enableClickSelection: true,
         },
       }),
-      Image,
+      ImageNode,
       HorizontalRule,
       TextAlign.configure({ types: ["heading", "paragraph"] }),
       TaskList,

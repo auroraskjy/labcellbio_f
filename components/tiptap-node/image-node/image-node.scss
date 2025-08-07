@@ -28,4 +28,79 @@
   .tiptap-thread img {
     margin: 0;
   }
+
+  .image-node-wrapper {
+    margin: 1em 0;
+
+    // read-only 모드일 때 선택 효과 제거
+    &.read-only {
+      .image-container img {
+        &.selected {
+          outline: none !important;
+        }
+      }
+    }
+
+    .image-container {
+      display: block;
+      position: relative;
+      width: 100%;
+      text-align: inherit; // 부모로부터 정렬 상속
+
+      &[data-text-align="left"] {
+        text-align: left;
+      }
+
+      &[data-text-align="center"] {
+        text-align: center;
+      }
+
+      &[data-text-align="right"] {
+        text-align: right;
+      }
+
+      img {
+        display: inline-block; // inline-block으로 변경하여 text-align이 적용되도록 함
+        max-width: 100%;
+        height: auto;
+        // ... 기존 스타일 유지
+
+        &.selected {
+          outline: 2px solid #0074d9;
+        }
+      }
+
+      .resize-handle {
+        position: absolute;
+        right: -4px;
+        bottom: -4px;
+        width: 8px;
+        height: 8px;
+        background: #0074d9;
+        cursor: se-resize;
+        border-radius: 50%;
+      }
+
+      .alignment-buttons {
+        position: absolute;
+        top: -30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 4px;
+
+        button {
+          padding: 2px 8px;
+          background: white;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          cursor: pointer;
+
+          &:hover {
+            background: #f5f5f5;
+          }
+        }
+      }
+    }
+  }
 }
