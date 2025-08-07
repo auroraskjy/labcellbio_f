@@ -40,8 +40,8 @@ export default function BoardList() {
             <TableHead className="w-[120px]">썸네일</TableHead>
             <TableHead className="text-center">제목</TableHead>
             <TableHead className="w-[180px] text-center">작성자</TableHead>
-            <TableHead className="w-[120px] text-right">작성일</TableHead>
-            <TableHead className="text-right">액션</TableHead>
+            <TableHead className="w-[120px] text-center">작성일</TableHead>
+            <TableHead className="text-right w-40">액션</TableHead>
           </TableRow>
         </TableHeader>
 

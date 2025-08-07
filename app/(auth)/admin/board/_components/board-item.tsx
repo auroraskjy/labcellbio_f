@@ -51,7 +51,7 @@ export default function BoardItem({ board }: BoardItemProps) {
           <span>{author}</span>
         </div>
       </TableCell>
-      <TableCell className="text-right">
+      <TableCell className="text-center">
         {formatDateSimple(createdAt)}
       </TableCell>
       <TableCell className="text-right">
