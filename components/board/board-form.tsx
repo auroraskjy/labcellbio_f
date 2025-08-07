@@ -12,6 +12,7 @@ import { FormProvider } from "react-hook-form";
 
 import { createBoard } from "@/services/board/board";
 import { ApiError } from "@/services/http-client";
+import { useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { BoardFormValues, useBoardForm } from "./hooks/use-board-form";
@@ -20,6 +21,8 @@ export default function BoardForm() {
   const methods = useBoardForm();
 
   const router = useRouter();
+
+  const queryClient = useQueryClient();
 
   const {
     handleSubmit,
@@ -42,6 +45,11 @@ export default function BoardForm() {
       await createBoard({
         ...rest,
         boardImages,
+      });
+
+      // boardList 쿼리 무효화하여 목록 새로고침
+      await queryClient.invalidateQueries({
+        queryKey: ["boardList"],
       });
 
       router.replace("/admin/board");

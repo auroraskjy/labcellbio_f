@@ -10,10 +10,10 @@ export default function AdminLayout({ children }: PropsWithChildren) {
     <div className="flex relative w-full min-h-screen">
       <AdminSidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         <AdminHeader />
-        <main className="flex-1 bg-[#fafbfc] h-full p-[14px] md:p-[21px]">
-          <div className="w-full h-full max-w-[var(--admin-container-width)] mx-auto">
+        <main className="flex-1 bg-[#fafbfc] p-[14px] md:p-[21px] overflow-hidden">
+          <div className="w-full h-full mx-auto max-w-[var(--admin-container-width)]">
             {children}
           </div>
         </main>

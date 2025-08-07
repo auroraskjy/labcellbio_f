@@ -1,25 +1,12 @@
 import { Button } from "@/components/ui/button";
-import { FileTextIcon, PlusIcon } from "lucide-react";
+import { PlusIcon } from "lucide-react";
 import Link from "next/link";
+import BoardList from "./_components/board-list";
 
 export default async function AdminPage() {
   return (
-    <div>
-      {/* top */}
-      <div className="w-full flex flex-col md:flex-row md:justify-between md:items-center gap-4">
-        <div className="flex flex-col items-start gap-1">
-          <h1 className="flex items-center gap-3 text-[1.315rem] font-[600]">
-            <div className="w-8.75 h-8.75 md:w-10 md:h-10 rounded-full bg-brand/10 flex items-center justify-center">
-              <FileTextIcon className="!w-5 !h-5 text-brand" />
-            </div>
-            게시글 리스트
-          </h1>
-
-          <p className="text-sm text-muted-foreground">
-            모든 게시글 현황을 한눈에 확인하세요
-          </p>
-        </div>
-
+    <div className="flex flex-col gap-4">
+      <div className="flex justify-end w-full">
         <Link href="/admin/board/new">
           <Button
             variant="default"
@@ -32,7 +19,7 @@ export default async function AdminPage() {
         </Link>
       </div>
 
-      {/* List */}
+      <BoardList />
     </div>
   );
 }

@@ -1,5 +1,18 @@
 "use client";
 
+// --- Tiptap Node ---
+import "@/components/tiptap-node/blockquote-node/blockquote-node.scss";
+import "@/components/tiptap-node/code-block-node/code-block-node.scss";
+import "@/components/tiptap-node/heading-node/heading-node.scss";
+import "@/components/tiptap-node/horizontal-rule-node/horizontal-rule-node.scss";
+import "@/components/tiptap-node/image-node/image-node.scss";
+import "@/components/tiptap-node/list-node/list-node.scss";
+import "@/components/tiptap-node/paragraph-node/paragraph-node.scss";
+import "@/components/tiptap-node/quote-node/quote-node.scss";
+
+// --- Styles ---
+import "@/components/tiptap-templates/simple/simple-editor.scss";
+
 import { ImageNode } from "@/components/tiptap-node/image-node/image-node-extension"; // 기본 Image 대신 커스텀 ImageNode 사용
 import { Quote } from "@/components/tiptap-node/quote-node";
 import { Highlight } from "@tiptap/extension-highlight";
@@ -45,8 +58,6 @@ const CustomHtml = ({ html }: { html: string }) => {
   });
 
   if (!editor) return null;
-
-  // console.log("Editor HTML:", editor.getHTML()); // 에디터가 생성한 HTML 확인
 
   return (
     <div className="tiptap ProseMirror">

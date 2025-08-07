@@ -1,5 +1,6 @@
 import "./globals.css";
 
+import QueryProvider from "@/components/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { cn } from "@/lib/tiptap-utils";
 import localFont from "next/font/local";
@@ -26,7 +27,7 @@ export default async function RootLayout({
         className={cn(pretendard.className, "antialiased")}
         suppressHydrationWarning
       >
-        {children}
+        <QueryProvider>{children}</QueryProvider>
         <Toaster expand closeButton />
       </body>
     </html>

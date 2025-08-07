@@ -1,17 +1,28 @@
 export interface GetBoardDTO {
   id: number;
-  writerName: string;
+  author: string;
+  authorImage: string;
   title: string;
+  description: string;
   content: string;
-  thumbnailUrl: string;
+  thumbnail: string;
   boardImages: {
-    name: number;
+    id: number;
+    fileUrl: string;
   }[];
   createdAt: string;
   updatedAt: string;
 }
 
-export type GetBoardResponse = GetBoardDTO[];
+export type GetBoardResponse = {
+  boards: GetBoardDTO[];
+  total: number;
+  page: number;
+  pageSize: number;
+  totalPages: number;
+  hasPrevious: boolean;
+  hasNext: boolean;
+};
 
 export interface CreateBoardRequest {
   author: string;
@@ -37,4 +48,9 @@ export interface CreateBoardResponse {
   }[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface GetBoardListRequest {
+  page: number;
+  pageSize: number;
 }

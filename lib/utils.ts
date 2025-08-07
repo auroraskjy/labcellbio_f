@@ -28,3 +28,26 @@ export function getFilenameWithTimestamp(originalName: string): string {
 
   return `${timestamp}_${originalName}`;
 }
+
+export function formatDate(date: string | Date, locale: string = "ko-KR") {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+
+  return dateObj.toLocaleDateString(locale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "long",
+  });
+}
+
+// 간단한 버전 (년-월-일만)
+export function formatDateSimple(date: string | Date) {
+  const dateObj = typeof date === "string" ? new Date(date) : date;
+
+  // UTC 시간 그대로 사용 (시간대 변환 없이)
+  const year = dateObj.getUTCFullYear();
+  const month = String(dateObj.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(dateObj.getUTCDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
+}

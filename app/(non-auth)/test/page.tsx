@@ -10,16 +10,16 @@ import "@/components/tiptap-node/quote-node/quote-node.scss";
 
 // --- Styles ---
 import "@/components/tiptap-templates/simple/simple-editor.scss";
-import { getBoardList } from "@/services/board/board";
-import CustomHtml from "./_components/html";
 
 const TestPage = async () => {
-  const res = await getBoardList();
+  // const res = await getBoardList();
 
-  const html = res.at(-1)?.content || "";
+  // const html = res.at(-1)?.content || "";
   // const html = res[0].content || "";
 
-  return <CustomHtml html={html} />;
+  // return <CustomHtml html={html} />;
+
+  return <div>test</div>;
 };
 
 export default TestPage;
