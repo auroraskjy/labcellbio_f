@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { PlusIcon } from "lucide-react";
 import Link from "next/link";
 import BoardList from "./_components/board-list";
 
@@ -11,9 +10,8 @@ export default async function AdminPage() {
           <Button
             variant="default"
             size="sm"
-            className="bg-brand hover:bg-brand/90 rounded-2xl w-full md:w-fit h-fit p-[7px_10.5px] gap-3"
+            className="bg-brand hover:bg-brand/90 rounded-2xl"
           >
-            <PlusIcon className="!w-4 !h-4" />
             게시글 등록
           </Button>
         </Link>

@@ -1,3 +1,5 @@
-export default function BannerPage() {
-  return <div>BannerPage</div>;
+import BannerList from "./_components/banner-list";
+
+export default async function BannerPage() {
+  return <BannerList />;
 }
