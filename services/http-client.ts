@@ -4,6 +4,39 @@ export interface FetchOptions extends RequestInit {
   params?: Record<string, string>;
 }
 
+// 백엔드 에러 응답 타입 (그대로)
+export interface BackendError {
+  error: string;
+  message: string[];
+  statusCode: number;
+}
+
+// 간단한 에러 클래스
+export class ApiError extends Error {
+  public readonly data: BackendError;
+
+  constructor(errorData: BackendError) {
+    super(errorData.error);
+    this.name = "ApiError";
+    this.data = errorData;
+  }
+
+  // 편의 메서드들
+  get messages() {
+    return this.data.message;
+  }
+
+  get statusCode() {
+    return this.data.statusCode;
+  }
+
+  showToasts(toastFn: (msg: string) => void, delay = 500) {
+    this.messages.forEach((message, index) => {
+      setTimeout(() => toastFn(message), index * delay);
+    });
+  }
+}
+
 // 환경변수에서 BASE_URL 가져오기
 const getBaseURL = (): string => {
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
@@ -56,7 +89,8 @@ class HttpClient {
     const data = await response.json();
 
     if (!response.ok) {
-      throw new Error(JSON.stringify(data));
+      // 백엔드 에러를 그대로 전달
+      throw new ApiError(data);
     }
     return data;
   }

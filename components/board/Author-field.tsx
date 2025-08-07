@@ -59,7 +59,7 @@ export default function AuthorField() {
   };
 
   return (
-    <InputGroup label="작성자 정보">
+    <InputGroup label="작성자 정보" isRequired>
       <div className="border border-gray-200 p-4 rounded-lg flex items-center gap-2 bg-gray-50">
         {/* 숨겨진 파일 입력 */}
         <input
@@ -84,7 +84,7 @@ export default function AuthorField() {
           </div>
         </Avatar>
 
-        <FieldSet label="작성자명" isRequired>
+        <FieldSet label="작성자명">
           <Input placeholder="작성자명을 입력하세요" {...register("author")} />
         </FieldSet>
       </div>

@@ -11,7 +11,9 @@ import { CodeIcon, UploadIcon } from "lucide-react";
 import { FormProvider } from "react-hook-form";
 
 import { createBoard } from "@/services/board/board";
+import { ApiError } from "@/services/http-client";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import { BoardFormValues, useBoardForm } from "./hooks/use-board-form";
 
 export default function BoardForm() {
@@ -36,12 +38,24 @@ export default function BoardForm() {
         : null
       : null;
 
-    await createBoard({
-      ...rest,
-      boardImages,
-    });
+    try {
+      await createBoard({
+        ...rest,
+        boardImages,
+      });
 
-    router.replace("/admin/board");
+      router.replace("/admin/board");
+    } catch (error) {
+      if (error instanceof ApiError) {
+        // 간단하게 토스트 띄우기
+        error.showToasts((msg) => toast.error(msg));
+
+        console.log("에러 정보:", error.data);
+      } else {
+        console.error("예상치 못한 에러:", error);
+        toast.error("알 수 없는 오류가 발생했습니다.");
+      }
+    }
   };
 
   // SimpleEditor 컴포넌트에 onUpdate prop 추가
@@ -104,7 +118,7 @@ export default function BoardForm() {
               <Input placeholder="제목을 입력하세요" {...register("title")} />
             </FieldSet>
 
-            <FieldSet label="설명" isRequired>
+            <FieldSet label="설명">
               <Input
                 placeholder="설명을 입력하세요"
                 {...register("description")}

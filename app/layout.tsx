@@ -27,7 +27,7 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         {children}
-        <Toaster expand />
+        <Toaster expand closeButton />
       </body>
     </html>
   );
