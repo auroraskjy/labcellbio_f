@@ -1,33 +1,23 @@
 "use client";
 
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
   TableCaption,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 
-import { formatDateSimple } from "@/lib/utils";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useBoardList } from "../_hooks/use-board-list";
+import BoardItem from "./board-item";
 
 export default function BoardList() {
-  const router = useRouter();
-
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useBoardList(6);
 
   const boards = data?.pages.flatMap((page) => page.boards) ?? [];
-
-  const handleRowClick = (id: number) => {
-    router.push(`/admin/board/${id}`);
-  };
 
   return (
     <div className="rounded-2xl w-full p-5 bg-white shadow-md">
@@ -51,42 +41,14 @@ export default function BoardList() {
             <TableHead className="text-center">제목</TableHead>
             <TableHead className="w-[180px] text-center">작성자</TableHead>
             <TableHead className="w-[120px] text-right">작성일</TableHead>
+            <TableHead className="text-right">액션</TableHead>
           </TableRow>
         </TableHeader>
 
         <TableBody>
-          {boards.map(
-            ({ id, thumbnail, title, author, authorImage, createdAt }) => (
-              <TableRow
-                key={id}
-                className="cursor-pointer"
-                onClick={() => handleRowClick(id)}
-              >
-                <TableCell>
-                  <div className="w-20 h-15 rounded-lg overflow-hidden relative">
-                    <Image
-                      src={thumbnail}
-                      alt={"thumbnail"}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </TableCell>
-                <TableCell className="text-center">{title}</TableCell>
-                <TableCell className="text-center">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage src={authorImage} />
-                    </Avatar>
-                    <span>{author}</span>
-                  </div>
-                </TableCell>
-                <TableCell className="text-right">
-                  {formatDateSimple(createdAt)}
-                </TableCell>
-              </TableRow>
-            )
-          )}
+          {boards.map((board) => (
+            <BoardItem board={board} key={board.id} />
+          ))}
         </TableBody>
       </Table>
     </div>

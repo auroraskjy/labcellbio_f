@@ -27,3 +27,7 @@ export const createBoard = async (
 export const getSingleBoard = async (id: number): Promise<GetBoardDTO> => {
   return httpClient.get<GetBoardDTO>(`/board/${id}`);
 };
+
+export const deleteBoard = async (id: number): Promise<{ message: string }> => {
+  return httpClient.delete<{ message: string }>(`/board/${id}`);
+};
