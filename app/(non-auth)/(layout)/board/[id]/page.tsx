@@ -80,12 +80,12 @@ export default async function BoardDetail({ params }: BoardDetailProps) {
     ]);
 
     return (
-      <div className="max-w-[640px] px-[20px] mx-auto flex flex-col pb-10">
+      <div className="max-w-[640px] px-[20px] mx-auto flex flex-col pb-10 pt-5">
         <div className="text-gray-900 text-xl md:text-4xl font-bold mb-4 md:mb-6">
           {board.title}
         </div>
 
-        <div className="flex items-center w-full justify-between">
+        <div className="flex items-center w-full justify-between mb-4">
           <div className="flex items-center gap-2 text-gray-600">
             <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden relative">
               <Image

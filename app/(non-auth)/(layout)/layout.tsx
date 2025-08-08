@@ -8,9 +8,9 @@ export default function NonAuthLayout({
   children: ReactNode;
 }>) {
   return (
-    <div>
+    <div className="relative w-full">
       <RootLayoutHeader />
-      <main>{children}</main>
+      <main className="pt-13 md:pt-17.5">{children}</main>
       <Footer />
     </div>
   );

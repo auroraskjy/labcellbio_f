@@ -6,7 +6,7 @@ export default async function RootLayoutHeader() {
   const { loggedIn } = await getAuthStatus();
 
   return (
-    <header className="h-13 md:h-17.5 w-full">
+    <header className="h-13 md:h-17.5 w-full fixed top-0 left-0 z-50 bg-white border-b border-[#ddd]">
       <div className="w-full h-full mx-auto max-w-[var(--container-width)] flex items-center justify-between px-5">
         <Link href="/">
           <h1 className="text-2xl font-[600] text-[#012748]">LABCELLBIO</h1>

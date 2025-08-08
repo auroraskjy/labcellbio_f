@@ -39,12 +39,10 @@ export default function BoardList() {
                 />
               </div>
 
-              {/*  */}
-              <strong className="text-sm md:text-[17px] font-bold truncate">
+              <strong className="text-sm md:text-[17px] font-bold truncate mt-2">
                 {board.title}
               </strong>
 
-              {/*  */}
               <span className="line-clamp-2 text-sm text-[#aaaaaa]">
                 {board.description}
               </span>
