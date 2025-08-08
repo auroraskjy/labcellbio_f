@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import LoginForm from "./_components/login-form";
 import LoginHeader from "./_components/login-header";
+
+export const metadata: Metadata = {
+  title: "로그인",
+  description: "로그인 페이지입니다.",
+};
 
 export default async function LoginPage() {
   return (
