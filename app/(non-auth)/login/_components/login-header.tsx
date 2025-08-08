@@ -8,8 +8,7 @@ export default function LoginHeader() {
   const router = useRouter();
 
   const handleBack = () => {
-    router.back(); // Next.js 13+ App Router
-    // 또는 router.push('/previous-page') // 특정 페이지로
+    router.back();
   };
 
   return (

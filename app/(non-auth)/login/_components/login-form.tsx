@@ -15,8 +15,6 @@ export default function LoginForm() {
     const hasErrors = errors.length > 0;
 
     if (hasErrors) {
-      console.log(errors);
-
       errors.forEach((error) => {
         toast.error(error, {
           duration: 3000,

@@ -16,7 +16,6 @@ interface BoardDetailProps {
 export async function generateMetadata({
   params,
 }: BoardDetailProps): Promise<Metadata> {
-  // params를 await로 기다림
   const { id } = await params;
   const boardId = parseInt(id);
 
