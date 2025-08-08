@@ -58,7 +58,11 @@ export default function ThumbnailPreview() {
   const thumbnailUrl = watch("thumbnail");
 
   return (
-    <InputGroup label="썸네일" isRequired>
+    <InputGroup
+      label="썸네일"
+      isRequired
+      tooltipDesc="게시글 목록에서 표시될 대표 이미지입니다.<br />소셜 미디어 공유 및 SEO를 위한 og:image 메타태그에도 사용됩니다.<br />16:9 비율의 이미지를 권장하며, 5MB 이하의 이미지 파일만 업로드 가능합니다."
+    >
       <div
         className="bg-muted rounded-lg max-w-50 h-40 flex justify-center items-center relative overflow-hidden cursor-pointer group"
         onClick={handleAvatarClick}

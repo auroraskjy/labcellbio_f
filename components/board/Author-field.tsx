@@ -59,7 +59,11 @@ export default function AuthorField() {
   };
 
   return (
-    <InputGroup label="작성자 정보" isRequired>
+    <InputGroup
+      label="작성자 정보"
+      isRequired
+      tooltipDesc="게시글 작성자의 이름과 프로필 이미지를 설정합니다.<br />프로필 이미지는 5MB 이하의 이미지 파일만 업로드 가능합니다."
+    >
       <div className="border border-gray-200 p-4 rounded-lg flex items-center gap-2 bg-gray-50">
         {/* 숨겨진 파일 입력 */}
         <input
@@ -84,7 +88,10 @@ export default function AuthorField() {
           </div>
         </Avatar>
 
-        <FieldSet label="작성자명">
+        <FieldSet
+          label="작성자명"
+          tooltipDesc="게시글에 표시될 작성자의 이름입니다."
+        >
           <Input placeholder="작성자명을 입력하세요" {...register("author")} />
         </FieldSet>
       </div>

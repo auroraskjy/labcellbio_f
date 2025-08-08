@@ -22,6 +22,7 @@ interface ImageUploadFieldProps {
   setValue: UseFormSetValue<BannerFormValues>;
   watch: UseFormWatch<BannerFormValues>;
   isRequired?: boolean;
+  tooltipDesc?: string;
 }
 
 export default function ImageUploadField({
@@ -30,6 +31,7 @@ export default function ImageUploadField({
   setValue,
   watch,
   isRequired = false,
+  tooltipDesc,
 }: ImageUploadFieldProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const imageValue = watch(fieldName);
@@ -70,7 +72,12 @@ export default function ImageUploadField({
   };
 
   return (
-    <FieldSet label={label} isRequired={isRequired} onClick={handleClick}>
+    <FieldSet
+      label={label}
+      isRequired={isRequired}
+      tooltipDesc={tooltipDesc}
+      onClick={handleClick}
+    >
       <input
         type="file"
         accept="image/*"

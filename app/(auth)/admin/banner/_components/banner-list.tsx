@@ -39,8 +39,6 @@ export default function BannerList() {
   const [hasChanges, setHasChanges] = useState(false);
   const { mutate: updateBannerOrder, isPending } = useUpdateBannerOrder();
 
-  console.log(data);
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {

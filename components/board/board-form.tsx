@@ -98,14 +98,21 @@ export default function BoardForm({ board }: BoardFormProps) {
           </div>
 
           <div className="w-full justify-between flex gap-4 flex-col md:flex-row">
-            <FieldSet label="제목" isRequired>
+            <FieldSet
+              label="제목"
+              isRequired
+              tooltipDesc={`게시글의 제목으로 사용되며,<br />검색 엔진 최적화(SEO)를 위한 메타태그 title에도 사용됩니다.<br />명확하고 구체적인 제목을 작성해주세요.`}
+            >
               <Input
                 placeholder="제목을 입력하세요"
                 {...methods.register("title")}
               />
             </FieldSet>
 
-            <FieldSet label="설명">
+            <FieldSet
+              label="설명"
+              tooltipDesc={`게시글의 간단한 요약 설명입니다.<br />검색 결과나 소셜 미디어 공유 시 미리보기로 표시되며,<br />150자 이내로 작성하는 것이 좋습니다.`}
+            >
               <Input
                 placeholder="설명을 입력하세요"
                 {...methods.register("description")}
