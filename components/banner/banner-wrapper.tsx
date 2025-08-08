@@ -14,7 +14,7 @@ export default function BannerWrapper({
     <div
       className={cn(
         "w-full",
-        "h-[50vh]", // 모바일 (641px 미만)
+        "h-[60vh]", // 모바일 (641px 미만)
         "min-[641px]:h-[70vh]", // 태블릿 (641px-1024px): 70vh
         "min-[1025px]:h-[60vh]",
         "min-[1025px]:min-h-[550px]",

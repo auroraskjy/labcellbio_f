@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import RootLayoutHeader from "./_components/header";
 
 export default function NonAuthLayout({
   children,
@@ -6,9 +6,9 @@ export default function NonAuthLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
-      <Header />
+    <div className="relative w-full">
+      <RootLayoutHeader />
       <main>{children}</main>
-    </>
+    </div>
   );
 }

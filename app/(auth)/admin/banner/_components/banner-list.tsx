@@ -1,5 +1,6 @@
 "use client";
 
+import { useBannerList } from "@/components/banner/hooks/use-banner-list";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -30,7 +31,6 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useUpdateBannerOrder } from "../_hooks/use-update-banner-order";
 import BannerItem from "./banner-item";
-import { useBannerList } from "./use-banner-list";
 
 export default function BannerList() {
   const { data } = useBannerList();
