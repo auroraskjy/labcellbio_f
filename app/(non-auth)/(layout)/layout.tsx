@@ -9,7 +9,7 @@ export default function NonAuthLayout({
   return (
     <div>
       <RootLayoutHeader />
-      <main>{children}</main>;
+      <main>{children}</main>
     </div>
   );
 }

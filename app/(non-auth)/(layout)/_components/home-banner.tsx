@@ -13,6 +13,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import BannerWrapper from "@/components/banner/banner-wrapper";
 import { useBannerList } from "@/components/banner/hooks/use-banner-list";
+import { Button } from "@/components/ui/button";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -79,13 +80,23 @@ export default function HomeBanner() {
           <SwiperSlide key={s.id}>
             <div className="relative h-full w-full">
               {/* 배경 이미지 (배너 이미지) */}
-              <Image
-                src={s.bannerImage}
-                alt={s.title}
-                fill
-                priority={idx === 0}
-                className="object-cover"
-              />
+              <>
+                <Image
+                  src={s.bannerImage}
+                  alt={s.title}
+                  fill
+                  priority={idx === 0}
+                  className="object-cover hidden lg:block"
+                />
+
+                <Image
+                  src={s.bannerMobileImage}
+                  alt={s.title}
+                  fill
+                  priority={idx === 0}
+                  className="object-cover lg:hidden"
+                />
+              </>
 
               {/* 좌측 카피 */}
               <div className="absolute left-[7%] md:left-[17%] top-1/4 md:top-1/2 md:-translate-y-1/2 flex flex-col gap-3 md:gap-4">
@@ -93,6 +104,15 @@ export default function HomeBanner() {
                 <p className="text-xl md:text-4xl font-bold whitespace-pre-line leading-6 md:leading-10">
                   {formatTitle(s.title)}
                 </p>
+                <a
+                  href={s.link}
+                  target={s.targetBlank ? "_blank" : "_self"}
+                  rel={s.targetBlank ? "noopener noreferrer" : undefined}
+                >
+                  <Button className="w-fit rounded-2xl h-[25px] lg:h-[35px] px-4 mt-2">
+                    More
+                  </Button>
+                </a>
               </div>
             </div>
           </SwiperSlide>
