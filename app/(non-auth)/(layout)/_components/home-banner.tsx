@@ -14,6 +14,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import BannerWrapper from "@/components/banner/banner-wrapper";
 import { useBannerList } from "@/components/banner/hooks/use-banner-list";
 import { Button } from "@/components/ui/button";
+import { ImageOff } from "lucide-react";
 import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
@@ -36,6 +37,17 @@ export default function HomeBanner() {
 
   const prevRef = useRef<HTMLButtonElement>(null);
   const nextRef = useRef<HTMLButtonElement>(null);
+
+  if (data.length === 0) {
+    return (
+      <BannerWrapper
+        className={`relative w-full overflow-hidden flex flex-col justify-center items-center bg-slate-50 gap-2`}
+      >
+        <ImageOff className="w-10 h-10 text-slate-400" />
+        <p className="text-slate-500 font-bold">배너 이미지가 없습니다!</p>
+      </BannerWrapper>
+    );
+  }
 
   return (
     <BannerWrapper className={`relative w-full overflow-hidden group`}>

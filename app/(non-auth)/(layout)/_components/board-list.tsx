@@ -3,7 +3,7 @@
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useBoardList } from "@/hooks/use-board-list";
-import { ChevronDownIcon } from "lucide-react";
+import { ChevronDownIcon, PackageXIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -16,6 +16,33 @@ export default function BoardList() {
   // 페이지네이션 계산
   const currentPage = data?.pages.length ?? 0;
   const totalPages = data?.pages[0]?.totalPages ?? 0;
+
+  if (boards.length === 0) {
+    return (
+      <div className="max-w-[1280px] w-full mx-auto px-5">
+        <div className="bg-card text-card-foreground flex flex-col rounded-xl border py-6 shadow-sm w-full max-w-md text-center mx-auto">
+          <div
+            data-slot="card-header"
+            className="@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6"
+          >
+            <div className="flex justify-center mb-4">
+              <PackageXIcon className="w-10 h-10 text-muted-foreground" />
+            </div>
+            <div data-slot="card-title" className="text-2xl font-bold">
+              게시글이 없습니다
+            </div>
+            <div
+              data-slot="card-description"
+              className="text-sm text-muted-foreground text-center"
+            >
+              아직 등록된 게시글이 없습니다. <br /> 새로운 게시글을 작성하거나
+              잠시 후 다시 확인해보세요.
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-[1280px] w-full mx-auto px-5">
