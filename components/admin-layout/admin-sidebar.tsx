@@ -5,7 +5,7 @@ import { SIDEBAR_MENU_ITEMS } from "./constant";
 import { cn } from "@/lib/utils";
 
 import SidebarItem from "@/components/admin-layout/sidebar-item";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { LogOutIcon } from "lucide-react";
 
 export default function AdminSidebar() {
@@ -14,8 +14,7 @@ export default function AdminSidebar() {
       <div className="p-6 border-b border-border/30 w-full h-21.5">
         <div className="flex items-center gap-3">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage src="/logo.png" />
           </Avatar>
 
           <div className="flex flex-col">
