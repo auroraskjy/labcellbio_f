@@ -1,14 +1,15 @@
+import { ReactNode } from "react";
 import RootLayoutHeader from "./_components/header";
 
 export default function NonAuthLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <div className="relative w-full">
+    <div>
       <RootLayoutHeader />
-      <main>{children}</main>
+      <main>{children}</main>;
     </div>
   );
 }

@@ -8,7 +8,9 @@ export default async function RootLayoutHeader() {
   return (
     <header className="h-13 md:h-17.5 w-full">
       <div className="w-full h-full mx-auto max-w-[var(--container-width)] flex items-center justify-between px-5">
-        <h1 className="text-2xl font-[600] text-[#012748]">LABCELLBIO</h1>
+        <Link href="/">
+          <h1 className="text-2xl font-[600] text-[#012748]">LABCELLBIO</h1>
+        </Link>
 
         {loggedIn ? (
           <div className="flex gap-4 items-center">

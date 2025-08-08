@@ -49,17 +49,28 @@ export async function signin(
     cookieStore.set("accessToken", accessToken);
     revalidateTag("auth-status");
 
-    return {
-      message: "로그인 성공!",
-    };
+    redirect("/");
   } catch (err: unknown) {
-    const { message } = JSON.parse((err as Error).message);
+    // Next.js redirect 에러는 다시 던져서 정상적인 리다이렉트가 되도록 함
+    if ((err as Error).message === "NEXT_REDIRECT") {
+      throw err;
+    }
 
-    return {
-      errors: {
-        message,
-      },
-    };
+    try {
+      const { message } = JSON.parse((err as Error).message);
+      return {
+        errors: {
+          message,
+        },
+      };
+    } catch {
+      // JSON 파싱이 실패하면 기본 에러 메시지 반환
+      return {
+        errors: {
+          message: "로그인 중 오류가 발생했습니다.",
+        },
+      };
+    }
   }
 }
 
