@@ -2,7 +2,6 @@
 
 import { useRef } from "react";
 
-import FieldSet from "@/components/board/field-set";
 import InputGroup from "@/components/board/input-group";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Input } from "@/components/ui/input";
@@ -14,6 +13,7 @@ import {
 } from "@/services/upload";
 import { SquarePenIcon, UserIcon } from "lucide-react";
 import { useFormContext } from "react-hook-form";
+import FieldSet from "../field-set";
 import { BoardFormValues } from "./hooks/use-board-form";
 
 export const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB

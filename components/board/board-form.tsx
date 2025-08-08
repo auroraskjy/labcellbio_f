@@ -1,7 +1,7 @@
 "use client";
 
 import AuthorField from "@/components/board/Author-field";
-import FieldSet from "@/components/board/field-set";
+
 import ThumbnailPreview from "@/components/board/thumbnail-preview";
 import { SimpleEditor } from "@/components/tiptap-templates/simple/simple-editor";
 import { Button } from "@/components/ui/button";
@@ -11,6 +11,7 @@ import { CodeIcon, UploadIcon } from "lucide-react";
 import { GetBoardDTO } from "@/services/board/types";
 import { FormProvider } from "react-hook-form";
 
+import FieldSet from "../field-set";
 import { BoardFormValues, useBoardForm } from "./hooks/use-board-form";
 import { useBoardMutation } from "./hooks/use-board-mutation";
 

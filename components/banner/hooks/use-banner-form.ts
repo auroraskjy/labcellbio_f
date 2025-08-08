@@ -7,6 +7,9 @@ const schema = z.object({
   title: z.string().min(1),
   subTitle: z.string().min(1),
   bannerImage: z.string().min(1),
+  bannerMobileImage: z.string().min(1),
+  link: z.string().min(1),
+  targetBlank: z.boolean(),
 });
 
 export function useBannerForm(banner?: BannerResponse) {
@@ -17,6 +20,9 @@ export function useBannerForm(banner?: BannerResponse) {
       title: banner?.title,
       subTitle: banner?.subTitle,
       bannerImage: banner?.bannerImage,
+      bannerMobileImage: banner?.bannerMobileImage,
+      link: banner?.link,
+      targetBlank: !!banner?.targetBlank,
     },
   });
 

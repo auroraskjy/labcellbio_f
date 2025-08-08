@@ -2,6 +2,9 @@ export interface BannerRequest {
   title: string;
   subTitle: string;
   bannerImage: string;
+  bannerMobileImage: string;
+  link: string;
+  targetBlank: boolean;
 }
 
 export interface Upload {
@@ -23,10 +26,14 @@ export interface BannerResponse {
   title: string;
   subTitle: string;
   bannerImage: string;
+  bannerMobileImage: string;
+  link: string;
+  targetBlank: boolean;
   displayOrder: number;
   createdAt: string;
   updatedAt: string;
-  upload: Upload;
+  desktopUpload: Upload;
+  mobileUpload: Upload;
 }
 
 export type UpdateBannerDisplayOrderRequest = {

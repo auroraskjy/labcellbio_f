@@ -15,7 +15,7 @@ interface BannerItemProps {
 }
 
 export default function BannerItem({ banner }: BannerItemProps) {
-  const { id, title, subTitle, upload } = banner;
+  const { id, title, subTitle, bannerImage, bannerMobileImage } = banner;
 
   const router = useRouter();
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner();
@@ -61,7 +61,7 @@ export default function BannerItem({ banner }: BannerItemProps) {
       <TableCell>
         <div className="w-20 h-15 rounded-lg overflow-hidden relative">
           <Image
-            src={upload?.fileUrl || "/placeholder.png"}
+            src={bannerImage || "/placeholder.png"}
             alt={title}
             fill
             className="object-cover"
