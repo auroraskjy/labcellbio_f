@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Footer from "./_components/footer";
 import RootLayoutHeader from "./_components/header";
 
 export default function NonAuthLayout({
@@ -10,6 +11,7 @@ export default function NonAuthLayout({
     <div>
       <RootLayoutHeader />
       <main>{children}</main>
+      <Footer />
     </div>
   );
 }
