@@ -54,6 +54,8 @@ export async function generateMetadata({
         creator: board.author,
       },
       authors: [{ name: board.author }],
+      // TODO 클라이언트와 상의후 키워드 추가할것
+      keywords: [board.title, board.description, "LABCELLBIO"],
     };
   } catch (error) {
     console.error("메타데이터 생성 오류:", error);
