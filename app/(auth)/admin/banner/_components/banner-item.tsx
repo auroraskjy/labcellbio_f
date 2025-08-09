@@ -15,7 +15,7 @@ interface BannerItemProps {
 }
 
 export default function BannerItem({ banner }: BannerItemProps) {
-  const { id, title, subTitle, bannerImage, bannerMobileImage } = banner;
+  const { id, title, subTitle, bannerImage } = banner;
 
   const router = useRouter();
   const { mutate: deleteBanner, isPending: isDeleting } = useDeleteBanner();

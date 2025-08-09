@@ -15,22 +15,61 @@ const pretendard = localFont({
 
 export const metadata: Metadata = {
   title: "LABCELLBIO",
+  /**
+   * 구글, 네이버 등에서 검색했을 때 제목 아래 회색 텍스트로 표시되는 부분
+   * 카카오톡, 페이스북, 트위터 등에 링크 공유시 미리보기 설명으로 표시
+   */
   description: "LABCELLBIO의 아이템을 만나보세요!",
-  icons: {
-    icon: [
-      { url: "/favicon/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/favicon/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon.ico" },
-    ],
-    apple: [
+  // 검색 엔진이 사이트를 색인화할 때 참고하는 키워드들
+  keywords: ["LABCELLBIO", "세포생물학", "연구실", "바이오", "생명과학"],
+  authors: [{ name: "LABCELLBIO" }],
+  creator: "LABCELLBIO",
+  publisher: "LABCELLBIO",
+  // Open Graph: 페이스북, 카카오톡, 슬랙 등에서 링크 공유시 표시되는 카드 정보
+  openGraph: {
+    type: "website",
+    locale: "ko_KR",
+    url: process.env.NEXT_PUBLIC_BASE_URL,
+    siteName: "LABCELLBIO",
+    title: "LABCELLBIO",
+    description: "LABCELLBIO의 아이템을 만나보세요!",
+    images: [
       {
-        url: "/favicon/apple-touch-icon.png",
-        sizes: "180x180",
-        type: "image/png",
+        url: "/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "LABCELLBIO 로고",
       },
     ],
   },
-  manifest: "/favicon/site.webmanifest",
+  // Twitter: 트위터(X)에서 링크 공유시 표시되는 카드 정보
+  twitter: {
+    card: "summary_large_image",
+    site: "@LABCELLBIO",
+    creator: "@LABCELLBIO",
+    title: "LABCELLBIO",
+    description: "LABCELLBIO의 아이템을 만나보세요!",
+    images: ["/logo.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  verification: {
+    // google-search-console 에서 발급받아서 코드 넣어주면됨
+    google: "your-google-verification-code",
+  },
+  other: {
+    // 네이버 서치어드바이저에서 발급받아서 코드 넣어주면됨
+    "naver-site-verification": "your-naver-verification-code",
+  },
 };
 
 export default async function RootLayout({
