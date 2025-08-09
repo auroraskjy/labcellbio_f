@@ -28,7 +28,6 @@ const toIsoOrNow = (v?: string | Date) => {
 };
 
 export async function GET() {
-  // 1) 정적 URLs - MetadataRoute.Sitemap 타입 사용
   const staticURLs: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -49,7 +48,6 @@ export async function GET() {
     const total = first.total ?? first.boards.length ?? 0;
     const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
 
-    // 나머지 페이지 수집
     let restBoards: GetBoardDTO[] = [];
     if (totalPages > 1) {
       const pages = Array.from({ length: totalPages - 1 }, (_, i) => i + 2);
