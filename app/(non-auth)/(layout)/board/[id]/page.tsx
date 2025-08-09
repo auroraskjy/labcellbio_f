@@ -80,45 +80,85 @@ export default async function BoardDetail({ params }: BoardDetailProps) {
       getAuthStatus(),
     ]);
 
+    const articleSchema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: board.title,
+      description:
+        board.description ||
+        board.content.substring(0, 160).replace(/<[^>]*>/g, ""),
+      image: [board.thumbnail],
+      author: {
+        "@type": "Person",
+        name: board.author,
+        image: board.authorImage,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "LABCELLBIO",
+        logo: {
+          "@type": "ImageObject",
+          // TODO LOGO 변하면 바꿔줘야함
+          url: `${process.env.NEXT_PUBLIC_BASE_URL}/logo.png`,
+        },
+      },
+      datePublished: board.createdAt,
+      dateModified: board.updatedAt,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `${process.env.NEXT_PUBLIC_BASE_URL}/board/${boardId}`,
+      },
+      inLanguage: "ko-KR",
+      isAccessibleForFree: true,
+    };
+
     return (
-      <div className="max-w-[640px] px-[20px] mx-auto flex flex-col pb-10 pt-5">
-        <div className="text-gray-900 text-xl md:text-4xl font-bold mb-4 md:mb-6">
-          {board.title}
-        </div>
-
-        <div className="flex items-center w-full justify-between mb-4">
-          <div className="flex items-center gap-2 text-gray-600">
-            <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden relative">
-              <Image
-                src={board.authorImage}
-                alt={board.author}
-                fill
-                className="object-cover"
-              />
-            </div>
-
-            <div className="flex flex-col">
-              <span className="text-base md:text-[18px] font-medium">
-                {board.author}
-              </span>
-              <span className="text-xs md:text-sm font-normal">
-                {formatDateSimple(board.createdAt)}
-              </span>
-            </div>
+      <>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(articleSchema),
+          }}
+        />
+        <div className="max-w-[640px] px-[20px] mx-auto flex flex-col pb-10 pt-5">
+          <div className="text-gray-900 text-xl md:text-4xl font-bold mb-4 md:mb-6">
+            {board.title}
           </div>
 
-          {authStatus.loggedIn && (
-            <Link
-              href={`/admin/board/${boardId}`}
-              className="text-sm text-[#777] transition-colors duration-[250ms] ease-in-out hover:text-black font-[500]"
-            >
-              수정
-            </Link>
-          )}
-        </div>
+          <div className="flex items-center w-full justify-between mb-4">
+            <div className="flex items-center gap-2 text-gray-600">
+              <div className="w-8 h-8 md:w-10 md:h-10 rounded-full overflow-hidden relative">
+                <Image
+                  src={board.authorImage}
+                  alt={board.author}
+                  fill
+                  className="object-cover"
+                />
+              </div>
 
-        <GetEditorContent html={board.content} />
-      </div>
+              <div className="flex flex-col">
+                <span className="text-base md:text-[18px] font-medium">
+                  {board.author}
+                </span>
+                <span className="text-xs md:text-sm font-normal">
+                  {formatDateSimple(board.createdAt)}
+                </span>
+              </div>
+            </div>
+
+            {authStatus.loggedIn && (
+              <Link
+                href={`/admin/board/${boardId}`}
+                className="text-sm text-[#777] transition-colors duration-[250ms] ease-in-out hover:text-black font-[500]"
+              >
+                수정
+              </Link>
+            )}
+          </div>
+
+          <GetEditorContent html={board.content} />
+        </div>
+      </>
     );
   } catch (error) {
     console.error("게시글 조회 오류:", error);
