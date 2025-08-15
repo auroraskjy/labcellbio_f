@@ -149,6 +149,7 @@ export default async function BoardDetail({ params }: BoardDetailProps) {
             {authStatus.loggedIn && (
               <Link
                 href={`/admin/board/${boardId}`}
+                target="_blank"
                 className="text-sm text-[#777] transition-colors duration-[250ms] ease-in-out hover:text-black font-[500]"
               >
                 수정

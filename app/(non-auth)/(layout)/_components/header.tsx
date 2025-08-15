@@ -16,6 +16,7 @@ export default async function RootLayoutHeader() {
           <div className="flex gap-4 items-center">
             <Link
               href="/admin/board"
+              target="_blank"
               className="text-sm text-[#777] transition-colors duration-[250ms] ease-in-out hover:text-black font-[500]"
             >
               어드민
