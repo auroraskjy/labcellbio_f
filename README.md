@@ -1,36 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LABCELLBIO FRONTEND
 
-## Getting Started
+LabCellBio 연구실의 공식 웹사이트입니다.
 
-First, run the development server:
+## 프로젝트 소개
 
+LABCELLBIO의 Frontend코드 입니다.
+
+## 기술 스택
+
+- **Frontend**: Next.js 15, React, TypeScript
+- **Styling**: SCSS, Tailwind CSS
+- **Editor**: TipTap (Rich Text Editor)
+- **Deployment**: Vercel
+
+## 배포 관련
+
+이 프로젝트는 main 브랜치에 코드를 푸시하면 자동으로 배포되는 시스템입니다. 
+
+배포 현황은 다음 링크에서 확인할 수 있습니다:
+https://vercel.com/auroraskjys-projects/labcellbio/deployments
+
+## 코드 실행 방법
+
+### 1. Node.js 설치
+1. [Node.js 공식 웹사이트](https://nodejs.org/)에서 LTS 버전을 다운로드합니다.
+2. 다운로드한 설치 파일을 실행하여 Node.js를 설치합니다.
+3. 설치가 완료되면 터미널에서 다음 명령어로 설치를 확인합니다:
+   ```bash
+   node --version
+   npm --version
+   ```
+
+### 2. 개발 도구 설치
+1. VS Code를 다운로드하여 설치합니다.
+
+### 3. 프로젝트 클론
+1. 터미널을 열고 원하는 위치로 이동합니다.
+   ```bash
+   cd <프로젝트 파일이 위치할 곳>
+   ```
+2. 다음 명령어를 실행하여 프로젝트를 클론합니다:
+   ```bash
+   git clone https://github.com/auroraskjy/labcellbio_f.git
+   ```
+
+### 4. 의존성 설치
+프로젝트 디렉토리로 이동한 후 다음 명령어를 실행하여 필요한 패키지들을 설치합니다:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 5. 개발 서버 실행
+의존성 설치가 완료되면 다음 명령어로 개발 서버를 실행합니다:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+개발 서버가 성공적으로 실행되면 브라우저에서 `http://localhost:3000`으로 접속하여 애플리케이션을 확인할 수 있습니다.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 프로젝트 구조
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+labcellbio_f/
+├── app/                    # Next.js App Router
+├── components/             # 재사용 가능한 컴포넌트
+├── services/              # API 서비스
+├── hooks/                 # 커스텀 훅
+├── lib/                   # 유틸리티 함수
+└── styles/                # 스타일 파일
+```
