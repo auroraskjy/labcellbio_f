@@ -1,9 +1,5 @@
 # LABCELLBIO FRONTEND
 
-LabCellBio 연구실의 공식 웹사이트입니다.
-
-## 프로젝트 소개
-
 LABCELLBIO의 Frontend코드 입니다.
 
 ## 기술 스택
