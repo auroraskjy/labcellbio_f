@@ -63,11 +63,9 @@ export const metadata: Metadata = {
     },
   },
   verification: {
-    // google-search-console 에서 발급받아서 코드 넣어주면됨
-    google: "your-google-verification-code",
+    google: "gIwtP5EOf6ZhlUE8M86dwtZlfK8XhS4YHjZgdmZIOGU",
   },
   other: {
-    // 네이버 서치어드바이저에서 발급받아서 코드 넣어주면됨
     "naver-site-verification": "1afefa469a8442d9899dc86903bded251364341f",
   },
 };
