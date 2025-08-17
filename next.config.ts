@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "labcellbio-images.s3.ap-northeast-2.amazonaws.com",
+        hostname: "labcellbio-image-upload.s3.ap-southeast-2.amazonaws.com",
         port: "",
         pathname: "/**",
       },
