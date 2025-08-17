@@ -30,8 +30,17 @@ export default function BoardItem({ board }: BoardItemProps) {
     deleteBoard(id);
   };
 
+  const handleClickRow = (id: number) => {
+    router.push(`/board/${id}`);
+  };
+
+  const handleButtonClick = (e: React.MouseEvent, handler: () => void) => {
+    e.stopPropagation();
+    handler();
+  };
+
   return (
-    <TableRow>
+    <TableRow onClick={() => handleClickRow(id)}>
       <TableCell>
         <div className="w-20 h-15 rounded-lg overflow-hidden relative">
           <Image
@@ -59,7 +68,7 @@ export default function BoardItem({ board }: BoardItemProps) {
           variant="ghost"
           size="icon"
           className="hover:bg-blue-50 hover:text-blue-600"
-          onClick={() => handleRowEdit(id)}
+          onClick={(e) => handleButtonClick(e, () => handleRowEdit(id))}
         >
           <PencilIcon className="w-4 h-4" />
         </Button>
@@ -67,7 +76,7 @@ export default function BoardItem({ board }: BoardItemProps) {
           variant="ghost"
           size="icon"
           className="hover:bg-red-50 hover:text-red-600"
-          onClick={() => handleRowDelete(id)}
+          onClick={(e) => handleButtonClick(e, () => handleRowDelete(id))}
           disabled={isPending}
         >
           <Trash2Icon className="w-4 h-4" />
