@@ -61,8 +61,9 @@ class HttpClient {
       url = `${this.baseURL}/${endpoint}`;
     }
     
-    // URL 객체 생성
-    const urlObj = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    // URL 객체 생성 - 서버사이드 렌더링 고려
+    const baseOrigin = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+    const urlObj = new URL(url, baseOrigin);
     
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
