@@ -49,7 +49,7 @@ export default function BoardList() {
       <div className="flex flex-col items-start md:items-center justify-center mb-[15px] md:mb-[30px]">
         <h2 className="text-xl md:text-4xl font-bold">최근 게시글</h2>
         <p className="text-[14px] md:text-[17px] text-muted-foreground font-normal mt-[5px]">
-          LABCELLBIO의 아이템을 만나보세요!
+        LABCELLBIO는 건강을 연구합니다
         </p>
       </div>
 

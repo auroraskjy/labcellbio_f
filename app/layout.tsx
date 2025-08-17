@@ -19,7 +19,7 @@ export const metadata: Metadata = {
    * 구글, 네이버 등에서 검색했을 때 제목 아래 회색 텍스트로 표시되는 부분
    * 카카오톡, 페이스북, 트위터 등에 링크 공유시 미리보기 설명으로 표시
    */
-  description: "LABCELLBIO의 아이템을 만나보세요!",
+  description: "LABCELLBIO는 건강을 연구합니다",
   // 검색 엔진이 사이트를 색인화할 때 참고하는 키워드들
   keywords: ["LABCELLBIO", "세포생물학", "연구실", "바이오", "생명과학"],
   authors: [{ name: "LABCELLBIO" }],
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     url: process.env.NEXT_PUBLIC_BASE_URL,
     siteName: "LABCELLBIO",
     title: "LABCELLBIO",
-    description: "LABCELLBIO의 아이템을 만나보세요!",
+    description: "LABCELLBIO는 건강을 연구합니다",
     images: [
       {
         url: "/logo.png",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     site: "@LABCELLBIO",
     creator: "@LABCELLBIO",
     title: "LABCELLBIO",
-    description: "LABCELLBIO의 아이템을 만나보세요!",
+    description: "LABCELLBIO는 건강을 연구합니다",
     images: ["/logo.png"],
   },
   robots: {
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
   },
   other: {
     // 네이버 서치어드바이저에서 발급받아서 코드 넣어주면됨
-    "naver-site-verification": "your-naver-verification-code",
+    "naver-site-verification": "1afefa469a8442d9899dc86903bded251364341f",
   },
 };
 
