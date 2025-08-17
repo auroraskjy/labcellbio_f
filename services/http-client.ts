@@ -39,13 +39,8 @@ export class ApiError extends Error {
 
 // 환경변수에서 BASE_URL 가져오기
 const getBaseURL = (): string => {
-  const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
-
-  if (!baseURL) {
-    throw new Error("NEXT_PUBLIC_API_BASE_URL 환경변수가 설정되지 않았습니다.");
-  }
-
-  return baseURL;
+  // rewrites를 사용하므로 상대 경로 사용
+  return '/api';
 };
 
 export const BASE_URL = getBaseURL();
@@ -58,13 +53,23 @@ class HttpClient {
   }
 
   private buildUrl(endpoint: string, params?: Record<string, string>): string {
-    const url = new URL(endpoint, this.baseURL);
+    // 상대 경로인 경우 baseURL과 결합
+    let url: string;
+    if (endpoint.startsWith('/')) {
+      url = `${this.baseURL}${endpoint}`;
+    } else {
+      url = `${this.baseURL}/${endpoint}`;
+    }
+    
+    // URL 객체 생성
+    const urlObj = new URL(url, typeof window !== 'undefined' ? window.location.origin : 'http://localhost:3000');
+    
     if (params) {
       Object.entries(params).forEach(([key, value]) => {
-        url.searchParams.append(key, value);
+        urlObj.searchParams.append(key, value);
       });
     }
-    return url.toString();
+    return urlObj.toString();
   }
 
   async fetchJSON<T>(

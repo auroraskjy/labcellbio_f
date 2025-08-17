@@ -13,6 +13,14 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'http://3.39.175.85/:path*',
+      },
+    ];
+  },
 };
 
 export default nextConfig;
