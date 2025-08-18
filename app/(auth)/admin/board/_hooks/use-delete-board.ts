@@ -1,4 +1,5 @@
 import { deleteBoard } from "@/services/board/board";
+import { triggerSitemapRegeneration } from "@/lib/sitemap-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -12,6 +13,10 @@ export const useDeleteBoard = () => {
       queryClient.invalidateQueries({
         queryKey: ["boardList"],
       });
+      
+      // sitemap 재생성 트리거
+      triggerSitemapRegeneration();
+      
       toast.success("게시글이 삭제되었습니다.");
     },
     onError: (error) => {

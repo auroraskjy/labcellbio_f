@@ -1,6 +1,7 @@
 import { createBoard, updateBoard } from "@/services/board/board";
 import { CreateBoardRequest } from "@/services/board/types";
 import { ApiError } from "@/services/http-client";
+import { triggerSitemapRegeneration } from "@/lib/sitemap-utils";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -23,6 +24,9 @@ export const useBoardMutation = ({ boardId }: UseBoardMutationOptions = {}) => {
       queryClient.invalidateQueries({
         queryKey: ["boardList"],
       });
+
+      // sitemap 재생성 트리거
+      triggerSitemapRegeneration();
 
       toast.success(
         isEditMode ? "게시글이 수정되었습니다." : "게시글이 작성되었습니다."

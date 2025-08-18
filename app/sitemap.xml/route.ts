@@ -3,8 +3,8 @@ import type { GetBoardDTO, GetBoardResponse } from "@/services/board/types";
 import type { MetadataRoute } from "next";
 import { NextResponse } from "next/server";
 
-// ISR: 1시간마다 재검증
-export const revalidate = 3600;
+// ISR: 10분마다 재검증 (트리거로 즉시 업데이트 가능)
+export const revalidate = 600;
 
 const RAW_BASE = process.env.NEXT_PUBLIC_BASE_URL;
 if (!RAW_BASE) {
